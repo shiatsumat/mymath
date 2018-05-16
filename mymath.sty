@@ -37,6 +37,7 @@
 \usepackage{amsthm, thmtools}
 
 \usepackage{newtxtext, newtxmath, bm}
+\usepackage[Symbolsmallscale]{upgreek}
 \makeatletter
 \@ifpackageloaded{stix2}{
 }{
@@ -61,43 +62,28 @@
 \usepackage{silence}
 \WarningsOff[latexfont]
 
-\ExplSyntaxOn
-\cs_new_eq:NN \Repeat \prg_replicate:nn
-\cs_new_eq:NN \If \bool_if:nTF
-\cs_new_eq:NN \Compare \int_compare_p:nNn
-\cs_new_eq:NN \IfEq \token_if_eq_meaning:NNTF
-\ExplSyntaxOff
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Graphics
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newenvironment{figcenter}{\begin{figure}[H]\centering}{\end{figure}}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Utility
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\m}[1]{\emph{#1}}
-
-\newcommand{\tp}[2]{\texorpdfstring{#1}{#2}}
+\ExplSyntaxOn
+\cs_new_eq:NN \Repeat \prg_replicate:nn
+\cs_new_eq:NN \If \bool_if:nTF
+\cs_new_eq:NN \CompareInt \int_compare_p:nNn
+\cs_new_eq:NN \IfTokenEq \token_if_eq_meaning:NNTF
+\ExplSyntaxOff
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Math Controls
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \allowdisplaybreaks
-
-\newcommand{\ab}{\nolinebreak[1]}
-\newcommand{\ds}{\displaystyle}
-\newcommand{\esm}{\ensuremath}
-
 \makeatletter
 \def\old@comma{,}
 \catcode`\,=13
 \def,{%
   \ifmmode%
-    \old@comma\ab%
+    \old@comma\nolinebreak[1]%
   \else%
     \old@comma%
   \fi%
@@ -105,96 +91,149 @@
 \makeatother
 
 \newcommand{\mathstyle}[1]{\mathchoice{{#1}}{{#1}}{{\scriptsize{#1}}}{\tiny{#1}}}
-\newcommand{\mrfl}[1]{\mathstyle{\reflectbox{\(#1\)}}}
-\newcommand{\mrtt}[2]{\mathstyle{\rotatebox[origin=c]{#1}{\(#2\)}}}
-\newcommand{\mrs}[2]{\mathstyle{\raisebox{#1}{\(#2\)}}}
-\newcommand{\mscl}[3]{\mathstyle{\scalebox{#1}[#2]{\(#3\)}}}
-
-\newcommand{\mos}[2]{\overset{#1}{#2}}
-\newcommand{\mus}[2]{\underset{#1}{#2}}
-
-\renewcommand{\Bar}[1]{\overline{#1}}
-\newcommand{\UBar}[1]{\underline{#1}}
-\renewcommand{\Hat}[1]{\widehat{#1}}
-\renewcommand{\Tilde}[1]{\widetilde{#1}}
-\newcommand{\Brace}[1]{\overbrace{#1}}
-\newcommand{\UBrace}[1]{\underbrace{#1}}
-\renewcommand{\Vec}[1]{\overrightarrow{#1}}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Math Classifications
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\let\declmop\DeclareMathOperator
-\newcommand{\mbn}[1]{\mathbin{#1}}
-\newcommand{\mrl}[1]{\mathrel{#1}}
+\newcommand{\mathreflect}[1]{\mathstyle{\reflectbox{\(#1\)}}}
+\newcommand{\mathrotate}[2]{\mathstyle{\rotatebox[origin=c]{#1}{\(#2\)}}}
+\newcommand{\mathraise}[2]{\mathstyle{\raisebox{#1}{\(#2\)}}}
+\newcommand{\mathscale}[3]{\mathstyle{\scalebox{#1}[#2]{\(#3\)}}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Math Brackets
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\leftright}[4][0]{%
-	\If{\Compare{#1}={0}}{%
-		\IfEq{#2}{.}{}{#2}#4%
-		\IfEq{#3}{.}{}{#3}%
-	}{\If{\Compare{#1}={1}}{%
+	\If{\CompareInt{#1}={0}}{%
+		\IfTokenEq{#2}{.}{}{#2}#4%
+		\IfTokenEq{#3}{.}{}{#3}%
+	}{\If{\CompareInt{#1}={1}}{%
 		\bigl#2#4\bigr#3%
-	}{\If{\Compare{#1}={2}}{%
+	}{\If{\CompareInt{#1}={2}}{%
 		\Bigl#2#4\Bigr#3%
-	}{\If{\Compare{#1}={3}}{%
+	}{\If{\CompareInt{#1}={3}}{%
 		\biggl#2#4\biggr#3%
-	}{\If{\Compare{#1}={4}}{%
+	}{\If{\CompareInt{#1}={4}}{%
 		\Biggl#2#4\Biggr#3%
 	}{%
 		\errmessage{leftright: illegal optional argument}%
 	}}}}}%
 }
 \newcommand{\leftmidright}[6][0]{%
-	\If{\Compare{#1}={0}}{%
-		\IfEq{#2}{.}{}{#2}#5%
-		\IfEq{#3}{.}{}{#3}#6%
-		\IfEq{#4}{.}{}{#4}%
-	}{\If{\Compare{#1}={1}}{%
+	\If{\CompareInt{#1}={0}}{%
+		\IfTokenEq{#2}{.}{}{#2}#5%
+		\IfTokenEq{#3}{.}{}{#3}#6%
+		\IfTokenEq{#4}{.}{}{#4}%
+	}{\If{\CompareInt{#1}={1}}{%
 		\bigl#2#5\bigm#3#6\bigr#4%
-	}{\If{\Compare{#1}={2}}{%
+	}{\If{\CompareInt{#1}={2}}{%
 		\Bigl#2#5\Bigm#3#6\Bigr#4%
-	}{\If{\Compare{#1}={3}}{%
+	}{\If{\CompareInt{#1}={3}}{%
 		\biggl#2#5\biggm#3#6\biggr#4%
-	}{\If{\Compare{#1}={4}}{%
+	}{\If{\CompareInt{#1}={4}}{%
 		\Biggl#2#5\Biggm#3#6\Biggr#4%
 	}{%
 		\errmessage{leftmidright: illegal optional argument}%
 	}}}}}%
 }
 
-\newcommand{\p}[2][0]{\leftright[#1](){#2}}
-\renewcommand{\b}[2][0]{\leftright[#1][]{#2}} % \b used to be a diacritic
-\newcommand{\pb}[2][0]{\leftright[#1](]{#2}}
-\newcommand{\bp}[2][0]{\leftright[#1][){#2}}
-\renewcommand{\c}[2][0]{\leftright[#1]\{\}{#2}} % \c used to be a diacritic
-\newcommand{\g}[2][0]{\leftright[#1]\langle\rangle{#2}}
-\renewcommand{\t}[2][0]{\leftright[#1]||{#2}} % \t used to be a diacritic
-\newcommand{\n}[2][0]{\leftright[#1]\lVert\rVert{#2}}
-\newcommand{\f}[2][0]{\leftright[#1]\lfloor\rfloor{#2}}
-\renewcommand{\l}[2][0]{\leftright[#1]\lceil\rceil{#2}} % \l used to be a special character
-\newcommand{\bb}[2][0]{\leftright[#1]\lBrack\rBrack{#2}}
-\newcommand{\cc}[2][0]{\leftright[#1]\lBrace\rBrace{#2}}
-\newcommand{\gc}[2][0]{\leftright[#1]\lAngle\rAngle{#2}}
-\newcommand{\ev}[2][1]{\,\leftright[#1].|{}_{#2}}
+\newcommand{\parened}[2][0]{\leftright[#1](){#2}}
+\newcommand{\bracketed}[2][0]{\leftright[#1][]{#2}}
+\newcommand{\parenbracketed}[2][0]{\leftright[#1](]{#2}}
+\newcommand{\bracketparened}[2][0]{\leftright[#1][){#2}}
+\newcommand{\braced}[2][0]{\leftright[#1]\{\}{#2}}
+\newcommand{\angled}[2][0]{\leftright[#1]\langle\rangle{#2}}
+\newcommand{\absoluted}[2][0]{\leftright[#1]||{#2}}
+\newcommand{\normed}[2][0]{\leftright[#1]\lVert\rVert{#2}}
+\newcommand{\floored}[2][0]{\leftright[#1]\lfloor\rfloor{#2}}
+\newcommand{\ceiled}[2][0]{\leftright[#1]\lceil\rceil{#2}}
+\newcommand{\Bracketed}[2][0]{\leftright[#1]\lBrack\rBrack{#2}}
+\newcommand{\Braced}[2][0]{\leftright[#1]\lBrace\rBrace{#2}}
+\newcommand{\Angled}[2][0]{\leftright[#1]\lAngle\rAngle{#2}}
 
-\newcommand{\pv}[3][0]{\leftmidright[#1](|){#2}{#3}}
-\newcommand{\bv}[3][0]{\leftmidright[#1][|]{#2}{#3}}
-\newcommand{\cv}[3][0]{\leftmidright[#1]\{|\}{#2}{#3}}
-\newcommand{\gv}[3][0]{\leftmidright[#1]\langle|\rangle{#2}{#3}}
-\newcommand{\bbv}[3][0]{\leftmidright[#1]\lBrack|\rBrack{#2}{#3}}
-\newcommand{\ccv}[3][0]{\leftmidright[#1]\lBrace|\rBrace{#2}{#3}}
-\newcommand{\gcv}[3][0]{\leftmidright[#1]\lAngle|\rAngle{#2}{#3}}
+\newcommand{\parenedvert}[3][0]{\leftmidright[#1](|){#2}{#3}}
+\newcommand{\bracketedvert}[3][0]{\leftmidright[#1][|]{#2}{#3}}
+\newcommand{\bracedvert}[3][0]{\leftmidright[#1]\{|\}{#2}{#3}}
+\newcommand{\angledvert}[3][0]{\leftmidright[#1]\langle|\rangle{#2}{#3}}
+\newcommand{\Bracketedvert}[3][0]{\leftmidright[#1]\lBrack|\rBrack{#2}{#3}}
+\newcommand{\Bracedvert}[3][0]{\leftmidright[#1]\lBrace|\rBrace{#2}{#3}}
+\newcommand{\Angledvert}[3][0]{\leftmidright[#1]\lAngle|\rAngle{#2}{#3}}
 
-\newcommand{\up}[2][0]{^{\p[#1]{#2}}}
+\newcommand{\upperparened}[2][0]{^{\parened[#1]{#2}}}
+\newcommand{\evaluatedat}[2][1]{\,\leftright[#1].|{}_{#2}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Math Font Styles
+% Arrows
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\makearrowr}[3][0]{\mathrel{\Repeat{#1}{#2\joinrel}#3}}
+\newcommand{\makearrowl}[3][0]{\mathrel{#2\Repeat{#1}{\joinrel#3}}}
+\newcommand{\makearrowb}[4][0]{\mathrel{#2\joinrel\Repeat{#1}{#3\joinrel}#4}}
+\newcommand{\makearrowx}[5][0]{\mathrel{\If{\CompareInt{#1}={0}}{#2}{#3\joinrel\Repeat{(#1) - 1}{#4\joinrel}#5}}}
+
+\renewcommand{\to}[1][0]{\makearrowr[#1]{\relbar}{\rightarrow}}
+\newcommand{\ot}[1][0]{\makearrowl[#1]{\leftarrow}{\relbar}}
+\newcommand{\To}[1][0]{\makearrowr[#1]{\Relbar}{\Rightarrow}}
+\newcommand{\oT}[1][0]{\makearrowl[#1]{\Leftarrow}{\Relbar}}
+
+\newcommand{\tot}[1][0]{\makearrowx[#1]{\leftrightarrow}{\leftarrow}{\relbar}{\rightarrow}}
+\newcommand{\ToT}[1][0]{\makearrowx[#1]{\Leftrightarrow}{\Leftarrow}{\Relbar}{\Rightarrow}}
+
+% mapping
+\newcommand{\mto}[1][0]{\makearrowx[#1]{\mapsto}{\vdash}{\relbar}{\rightarrow}}
+\newcommand{\otm}[1][0]{\makearrowx[#1]{\mathreflect{\mapsto}}{\leftarrow}{\relbar}{\dashv}}
+\newcommand{\Mto}[1][0]{\makearrowb[#1]{\mathrel{\mathrms{0.23ex}{\mathscale{1}{0.6}{\mid}}\mkern-1mu}}{\Relbar}{\Rightarrow}}
+\newcommand{\otM}[1][0]{\makearrowb[#1]{\Leftarrow}{\Relbar}{\mkern-1mu\mathrel{\mathrms{0.23ex}{\mathscale{1}{0.6}{\mid}}\mkern-1mu}}}
+
+% partial
+\newcommand{\pto}[1][0]{\makearrowr[#1]{\relbar}{\rightharpoonup}}
+\newcommand{\otp}[1][0]{\makearrowl[#1]{\leftharpoonup}{\relbar}}
+
+% injective
+\newcommand{\ito}[1][0]{\makearrowb[#1]{\lhook}{\relbar}{\rightarrow}}
+\newcommand{\oti}[1][0]{\makearrowb[#1]{\leftarrow}{\relbar}{\rhook}}
+
+% surjective
+\newcommand{\sto}[1][0]{\makearrowr[#1]{\relbar}{\rightarrow\kern-1.8ex\rightarrow}}
+\newcommand{\ots}[1][0]{\makearrowl[#1]{\leftarrow\kern-1.8ex\leftarrow}{\relbar}}
+
+\newcommand{\toto}{\rightrightarrows}
+\newcommand{\otot}{\leftleftarrows}
+\newcommand{\toot}{\rightleftarrows}
+\newcommand{\otto}{\leftrightarrows}
+
+% vertical
+\newcommand{\uto}[1][0]{\mathrel{\mathrmtt{90}{\to[#1]}}}
+\newcommand{\dto}[1][0]{\mathrel{\mathrmtt{-90}{\to[#1]}}}
+\newcommand{\uTo}[1][0]{\mathrel{\mathrmtt{90}{\To[#1]}}}
+\newcommand{\dTo}[1][0]{\mathrel{\mathrmtt{-90}{\To[#1]}}}
+
+% diagonal
+\newcommand{\ulto}[1][0]{\mathrel{\mathrmtt{135}{\to[#1]}}}
+\newcommand{\urto}[1][0]{\mathrel{\mathrmtt{45}{\to[#1]}}}
+\newcommand{\dlto}[1][0]{\mathrel{\mathrmtt{-135}{\to[#1]}}}
+\newcommand{\drto}[1][0]{\mathrel{\mathrmtt{-45}{\to[#1]}}}
+\newcommand{\ulTo}[1][0]{\mathrel{\mathrmtt{135}{\To[#1]}}}
+\newcommand{\urTo}[1][0]{\mathrel{\mathrmtt{45}{\To[#1]}}}
+\newcommand{\dlTo}[1][0]{\mathrel{\mathrmtt{-135}{\To[#1]}}}
+\newcommand{\drTo}[1][0]{\mathrel{\mathrmtt{-45}{\To[#1]}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Abbreviations
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Utilities
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\m}[1]{\emph{#1}}
+
+\newenvironment{figcenter}{\begin{figure}[H]\centering}{\end{figure}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Controls
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\ds}{\displaystyle}
 
 \newcommand{\mr}[1]{\mathrm{#1}}
 \newcommand{\mt}[1]{\mathtt{#1}}
@@ -206,13 +245,6 @@
 \newcommand{\msc}[1]{\mathscr{#1}}
 \newcommand{\mfr}[1]{\mathfrak{#1}}
 
-\newcommand{\mss}{\scriptstyle}
-\newcommand{\msss}{\scriptscriptstyle}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Text Controls
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \newcommand{\q}{\quad}
 \newcommand{\qq}{\qquad}
 
@@ -221,15 +253,36 @@
 \newcommand{\sitx}{\shortintertext}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Special Characters
+% Math Brackets
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\prm}{^\prime}
-\newcommand{\pprm}{^{\prime\prime}}
-\newcommand{\sect}{\relax\ifmmode\mathsection\else\textsection\fi}
+\newcommand{\p}[2][0]{\parened[#1]{#2}}
+\renewcommand{\b}[2][0]{\bracketed[#1]{#2}} % \b used to be a diacritic
+\newcommand{\pb}[2][0]{\parenbracketed[#1]{#2}}
+\newcommand{\bp}[2][0]{\bracketparened[#1]{#2}}
+\renewcommand{\c}[2][0]{\braced[#1]{#2}} % \c used to be a diacritic
+\newcommand{\g}[2][0]{\angled[#1]{#2}}
+\renewcommand{\t}[2][0]{\absoluted[#1]{#2}} % \t used to be a diacritic
+\newcommand{\n}[2][0]{\normed[#1]{#2}}
+\newcommand{\f}[2][0]{\floored[#1]{#2}}
+\renewcommand{\l}[2][0]{\ceiled[#1]{#2}} % \l used to be a special character
+\newcommand{\bb}[2][0]{\Bracketed[#1]{#2}}
+\newcommand{\cc}[2][0]{\Braced[#1]{#2}}
+\newcommand{\gc}[2][0]{\Angled[#1]{#2}}
+
+\newcommand{\pv}[3][0]{\parenedvert[#1]{#2}{#3}}
+\newcommand{\bv}[3][0]{\bracketedvert[#1]{#2}{#3}}
+\newcommand{\cv}[3][0]{\bracedvert[#1]{#2}{#3}}
+\newcommand{\gv}[3][0]{\angledvert[#1]{#2}{#3}}
+\newcommand{\bbv}[3][0]{\Bracketedvert[#1]{#2}{#3}}
+\newcommand{\ccv}[3][0]{\Bracedvert[#1]{#2}{#3}}
+\newcommand{\gcv}[3][0]{\Angledvert[#1]{#2}{#3}}
+
+\newcommand{\up}[2][0]{\upperparened[#1]{#2}}
+\newcommand{\ev}[2][1]{\evaluatedat[#1]{#2}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Math Greek Alphabets
+% Characters
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % alpha
@@ -270,16 +323,64 @@
 \newcommand{\omg}{\omega}
 \newcommand{\Omg}{\Omega}
 
-\newcommand{\NN}{\mbb{N}}
-\newcommand{\NNc}{\hat{\mbb{N}}}
-\newcommand{\ZZ}{\mbb{Z}}
-\newcommand{\ZZc}{\hat{\mbb{Z}}}
-\newcommand{\QQ}{\mbb{Q}}
-\newcommand{\QQc}{\hat{\mbb{Q}}}
-\newcommand{\RR}{\mbb{R}}
-\newcommand{\RRc}{\hat{\mbb{R}}}
-\newcommand{\CC}{\mbb{C}}
-\newcommand{\CCc}{\hat{\mbb{C}}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\NNc}{\hat{\mathbb{N}}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\ZZc}{\hat{\mathbb{Z}}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\QQc}{\hat{\mathbb{Q}}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\RRc}{\hat{\mathbb{R}}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\CCc}{\hat{\mathbb{C}}}
+
+\newcommand{\prm}[1][1]{^{\Repeat{#1}{\prime}}}
+
+\newcommand{\sect}{\relax\ifmmode\mathsection\else\textsection\fi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Everyday Logic
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\defeq}{\mathrel{\vcentcolon=}}
+\newcommand{\eqdef}{\mathrel{=\vcentcolon}}
+\newcommand{\A}[1]{\forall\,#1.\,\ }
+\renewcommand{\AA}[1]{\forall\,#1}
+\newcommand{\E}[1]{\exists\,#1.\ }
+\newcommand{\EE}[1]{\exists\,#1}
+\renewcommand{\iff}{\ensuremath{\mathrel{\Longleftrightarrow}}\xspace}
+\newcommand{\defiff}{\ensuremath{\mathrel{\vcentcolon\iff}}}
+\newcommand{\iffdef}{\ensuremath{\mathrel{\iff\vcentcolon}}}
+\newcommand{\so}{\ensuremath{\therefore}\xspace}
+\newcommand{\cz}{\ensuremath{\because}\xspace}
+\newcommand{\imp}{\ensuremath{\mathrel{\Longrightarrow}}\xspace}
+\newcommand{\pmi}{\ensuremath{\mathrel{\Longleftarrow}}\xspace}
+\renewcommand{\land}{\mathrel{\text{and}}}
+\renewcommand{\lor}{\mathrel{\text{or}}}
+
+\newcommand{\w}{\colon}
+
+\newcommand{\when}{\mathrel{\text{when}}}
+\newcommand{\othws}{\mathrel{\text{otherwise}}}
+
+\newcommand{\dfd}{\downarrow}
+\newcommand{\undfd}{\uparrow}
+\newcommand{\ex}[1]{\mathrel{\underset{\to}{#1}}}
+\newcommand{\xe}[1]{\mathrel{\underset{\ot}{#1}}}
+\newcommand{\xx}[1]{\mathrel{\underset{\tot}{#1}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Formal Logic
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\yld}{\mathrel{\vdash}}
+\newcommand{\nyld}{\mathrel{\nvdash}}
+\newcommand{\mdl}{\mathrel{\vDash}}
+\newcommand{\nmdl}{\mathrel{\nvDash}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Everyday Set Theory
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\gez}{_{\ge 0}}
 \newcommand{\gtz}{_{> 0}}
@@ -289,114 +390,15 @@
 \newcommand{\eqv}{\equiv}
 \newcommand{\iso}{\simeq}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Arrows
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newcommand{\makearrowr}[3][0]{\mathrel{\Repeat{#1}{#2\joinrel}#3}}
-\newcommand{\makearrowl}[3][0]{\mathrel{#2\Repeat{#1}{\joinrel#3}}}
-\newcommand{\makearrowb}[4][0]{\mathrel{#2\joinrel\Repeat{#1}{#3\joinrel}#4}}
-\newcommand{\makearrowx}[5][0]{\mathrel{\If{\Compare{#1}={0}}{#2}{#3\joinrel\Repeat{(#1) - 1}{#4\joinrel}#5}}}
-
-\renewcommand{\to}[1][0]{\makearrowr[#1]{\relbar}{\rightarrow}}
-\newcommand{\ot}[1][0]{\makearrowl[#1]{\leftarrow}{\relbar}}
-\newcommand{\To}[1][0]{\makearrowr[#1]{\Relbar}{\Rightarrow}}
-\newcommand{\oT}[1][0]{\makearrowl[#1]{\Leftarrow}{\Relbar}}
-
-\newcommand{\tot}[1][0]{\makearrowx[#1]{\leftrightarrow}{\leftarrow}{\relbar}{\rightarrow}}
-\newcommand{\ToT}[1][0]{\makearrowx[#1]{\Leftrightarrow}{\Leftarrow}{\Relbar}{\Rightarrow}}
-
-% mapping
-\newcommand{\mto}[1][0]{\makearrowx[#1]{\mapsto}{\vdash}{\relbar}{\rightarrow}}
-\newcommand{\otm}[1][0]{\makearrowx[#1]{\mrfl{\mapsto}}{\leftarrow}{\relbar}{\dashv}}
-\newcommand{\Mto}[1][0]{\makearrowb[#1]{\mrl{\mrs{0.23ex}{\mscl{1}{0.6}{\mid}}\mkern-1mu}}{\Relbar}{\Rightarrow}}
-\newcommand{\otM}[1][0]{\makearrowb[#1]{\Leftarrow}{\Relbar}{\mkern-1mu\mrl{\mrs{0.23ex}{\mscl{1}{0.6}{\mid}}\mkern-1mu}}}
-
-% partial
-\newcommand{\pto}[1][0]{\makearrowr[#1]{\relbar}{\rightharpoonup}}
-\newcommand{\otp}[1][0]{\makearrowl[#1]{\leftharpoonup}{\relbar}}
-
-% injective
-\newcommand{\ito}[1][0]{\makearrowb[#1]{\lhook}{\relbar}{\rightarrow}}
-\newcommand{\oti}[1][0]{\makearrowb[#1]{\leftarrow}{\relbar}{\rhook}}
-
-% surjective
-\newcommand{\sto}[1][0]{\makearrowr[#1]{\relbar}{\rightarrow\kern-1.8ex\rightarrow}}
-\newcommand{\ots}[1][0]{\makearrowl[#1]{\leftarrow\kern-1.8ex\leftarrow}{\relbar}}
-
-\newcommand{\toto}{\rightrightarrows}
-\newcommand{\otot}{\leftleftarrows}
-\newcommand{\toot}{\rightleftarrows}
-\newcommand{\otto}{\leftrightarrows}
-
-% vertical
-\newcommand{\uto}[1][0]{\mrl{\mrtt{90}{\to[#1]}}}
-\newcommand{\dto}[1][0]{\mrl{\mrtt{-90}{\to[#1]}}}
-\newcommand{\uTo}[1][0]{\mrl{\mrtt{90}{\To[#1]}}}
-\newcommand{\dTo}[1][0]{\mrl{\mrtt{-90}{\To[#1]}}}
-
-% diagonal
-\newcommand{\ulto}[1][0]{\mrl{\mrtt{135}{\to[#1]}}}
-\newcommand{\urto}[1][0]{\mrl{\mrtt{45}{\to[#1]}}}
-\newcommand{\dlto}[1][0]{\mrl{\mrtt{-135}{\to[#1]}}}
-\newcommand{\drto}[1][0]{\mrl{\mrtt{-45}{\to[#1]}}}
-\newcommand{\ulTo}[1][0]{\mrl{\mrtt{135}{\To[#1]}}}
-\newcommand{\urTo}[1][0]{\mrl{\mrtt{45}{\To[#1]}}}
-\newcommand{\dlTo}[1][0]{\mrl{\mrtt{-135}{\To[#1]}}}
-\newcommand{\drTo}[1][0]{\mrl{\mrtt{-45}{\To[#1]}}}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Everyday Logic
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newcommand{\defeq}{\mrl{\vcentcolon=}}
-\newcommand{\eqdef}{\mrl{=\vcentcolon}}
-\newcommand{\A}[1]{\forall\,#1.\,\ }
-\renewcommand{\AA}[1]{\forall\,#1}
-\newcommand{\E}[1]{\exists\,#1.\ }
-\newcommand{\EE}[1]{\exists\,#1}
-\renewcommand{\iff}{\esm{\mrl{\Longleftrightarrow}}\xspace}
-\newcommand{\defiff}{\esm{\mrl{\vcentcolon\iff}}}
-\newcommand{\iffdef}{\esm{\mrl{\iff\vcentcolon}}}
-\newcommand{\so}{\esm{\therefore}\xspace}
-\newcommand{\cz}{\esm{\because}\xspace}
-\newcommand{\imp}{\esm{\mrl{\Longrightarrow}}\xspace}
-\newcommand{\pmi}{\esm{\mrl{\Longleftarrow}}\xspace}
-\renewcommand{\land}{\mrl{\tx{and}}}
-\renewcommand{\lor}{\mrl{\tx{or}}}
-
-\newcommand{\w}{\colon}
-
-\newcommand{\when}{\mrl{\tx{when}}}
-\newcommand{\othws}{\mrl{\tx{otherwise}}}
-
-\newcommand{\dfd}{\downarrow}
-\newcommand{\undfd}{\uparrow}
-\newcommand{\ex}[1]{\mrl{\mus{\to}{#1}}}
-\newcommand{\xe}[1]{\mrl{\mus{\ot}{#1}}}
-\newcommand{\xx}[1]{\mrl{\mus{\tot}{#1}}}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Logic
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newcommand{\yld}{\vdash}
-\newcommand{\nyld}{\nvdash}
-\newcommand{\mdl}{\vDash}
-\newcommand{\nmdl}{\nvDash}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Set Theory
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newcommand{\finite}{\mr{finite}}
-\newcommand{\finitepls}{\mr{finite}^+}
-\newcommand{\infinite}{\mr{infinite}}
-\newcommand{\infinitepls}{\mr{infinite}^+}
-\newcommand{\infinitepsbl}{\mr{infinite}^?}
-\newcommand{\infinitepsblpls}{\mr{infinite}^{?+}}
-\newcommand{\cofinite}{\mr{cofinite}}
-\newcommand{\pwr}{\mcl P}
+\newcommand{\finite}{\mathrm{finite}}
+\newcommand{\finitepls}{\mathrm{finite}^+}
+\newcommand{\infinite}{\mathrm{infinite}}
+\newcommand{\infinitepls}{\mathrm{infinite}^+}
+\newcommand{\infinitepsbl}{\mathrm{infinite}^?}
+\newcommand{\infinitepsblpls}{\mathrm{infinite}^{?+}}
+\newcommand{\cofinite}{\mathrm{cofinite}}
+\newcommand{\power}{\mathcal P}
+\newcommand{\pwr}{\power}
 
 \newcommand{\nin}{\notin}
 \newcommand{\emp}{\varnothing}
@@ -408,12 +410,12 @@
 \newcommand{\subx}{\subsetneq}
 \newcommand{\sprx}{\supsetneq}
 
-\newcommand{\sssub}[1]{{}_{#1}\ab\sub}
-\newcommand{\sssubx}[1]{{}_{#1}\ab\subx}
-\newcommand{\ssspr}[1]{{}_{#1}\ab\spr}
-\newcommand{\sssprx}[1]{{}_{#1}\ab\sprx}
-\newcommand{\ssni}[1]{{}_{#1}\ab\ni}
-\newcommand{\ssin}[1]{{}_{#1}\ab\in}
+\newcommand{\sssub}[1]{{}_{#1}\all\sub}
+\newcommand{\sssubx}[1]{{}_{#1}\nolinebreak[1]\subx}
+\newcommand{\ssspr}[1]{{}_{#1}\nolinebreak[1]\spr}
+\newcommand{\sssprx}[1]{{}_{#1}\nolinebreak[1]\sprx}
+\newcommand{\ssni}[1]{{}_{#1}\nolinebreak[1]\ni}
+\newcommand{\ssin}[1]{{}_{#1}\nolinebreak[1]\in}
 \newcommand{\isub}{\sssub{\ne\emp}}
 \newcommand{\isubx}{\sssubx{\ne\emp}}
 \newcommand{\finitesub}{\sssub{\finite}}
@@ -430,8 +432,8 @@
 \newcommand{\sorp}{\uplus}
 \newcommand{\Sorp}{\biguplus}
 \newcommand{\diff}{\smallsetminus}
-\newcommand{\sdiff}{\mbn{\triangle}}
-\newcommand{\co}{^{\msf{c}}}
+\newcommand{\sdiff}{\mathbin{\triangle}}
+\newcommand{\co}{^{\mathsf{c}}}
 \newcommand{\X}{\times}
 
 \newcommand{\oX}{\otimes}
@@ -441,7 +443,7 @@
 
 \newcommand{\inv}{^{-1}}
 
-\newcommand{\Cl}[1]{\mop{Cl}_{#1}}
+\newcommand{\Cl}[1]{\mathop{Cl}_{#1}}
 \newcommand{\Clfinite}[1]{\Cl{\finite\,#1}}
 \newcommand{\Clfinitepls}[1]{\Cl{\finitepls#1}}
 \newcommand{\Clinfinite}[1]{\Cl{\infinite\,#1}}
@@ -449,28 +451,28 @@
 \newcommand{\Clinfinitepsbl}[1]{\Cl{\infinitepsbl\,#1}}
 \newcommand{\Clinfinitepsblpls}[1]{\Cl{\infinitepsblpls\,#1}}
 
-\newcommand{\Clfilter}{\Cl{\mr{filter}}}
+\newcommand{\Clfilter}{\Cl{\mathrm{filter}}}
 
-\declmop{\fst}{fst}
-\declmop{\snd}{snd}
-\declmop{\thd}{thd}
-\declmop{\ord}{ord}
+\DeclareMathOperator{\fst}{fst}
+\DeclareMathOperator{\snd}{snd}
+\DeclareMathOperator{\thd}{thd}
+\DeclareMathOperator{\ord}{ord}
 
-\renewcommand{\o}{\mbn{\circ}} % \o used to be a special character
-\newcommand{\oc}{\mbn{\zcmp}}
-\newcommand{\pa}{\mbn{\triangleleft}}
-\newcommand{\ap}{\mbn{\triangleright}}
-\newcommand{\cd}{\mbn{\cdot}}
-\newcommand{\dc}{\mbn{;}}
+\renewcommand{\o}{\mathbin{\circ}} % \o used to be a special character
+\newcommand{\oc}{\mathbin{\zcmp}}
+\newcommand{\pa}{\mathbin{\triangleleft}}
+\newcommand{\ap}{\mathbin{\triangleright}}
+\newcommand{\cd}{\mathbin{\cdot}}
+\newcommand{\dc}{\mathbin{;}}
 
-\newcommand{\id}{\mr{id}}
-\newcommand{\inc}{\mr{inc}}
-\newcommand{\inj}{\mr{inj}}
-\newcommand{\prj}{\mr{prj}}
-\newcommand{\srj}{\mr{srj}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\inc}{\mathrm{inc}}
+\newcommand{\inj}{\mathrm{inj}}
+\newcommand{\prj}{\mathrm{prj}}
+\newcommand{\srj}{\mathrm{srj}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Order Theory
+% Everyday Order Theory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\ltgt}{\lessgtr}
@@ -492,95 +494,95 @@
 \newcommand{\qor}{\sqcup}
 \newcommand{\Qor}{\bigsqcup}
 
-\declmop{\Max}{Max}
-\declmop{\Min}{Min}
-\declmop{\Ub}{Ub}
-\declmop{\Lb}{Lb}
+\DeclareMathOperator{\Max}{Max}
+\DeclareMathOperator{\Min}{Min}
+\DeclareMathOperator{\Ub}{Ub}
+\DeclareMathOperator{\Lb}{Lb}
 
-\newcommand{\join}{\mbn\vee}
-\newcommand{\meet}{\mbn\wedge}
+\newcommand{\join}{\mathbin\vee}
+\newcommand{\meet}{\mathbin\wedge}
 \renewcommand{\Join}{\bigvee}
-\declmop{\Joind}{\bigvee_{\mathllap{\uparrow}}}
+\DeclareMathOperator{\Joind}{\bigvee_{\mathllap{\uparrow}}}
 \newcommand{\Meet}{\bigwedge}
-\declmop{\Meetd}{\bigwedge{\mathllap{\downarrow}}}
+\DeclareMathOperator{\Meetd}{\bigwedge{\mathllap{\downarrow}}}
 
-\declmop*{\upr}{\uparrow}
-\declmop*{\lwr}{\downarrow}
-\declmop*{\uprx}{\mrtt{-90}{{\ot}\mathllap{\textcolor{white}{\bullet}}\mathllap{\circ}}}
-\declmop*{\lwrx}{\mrtt{90}{{\ot}\mathllap{\textcolor{white}{\bullet}}\mathllap{\circ}}}
-\declmop*{\uupr}{\upuparrows}
-\declmop*{\llwr}{\downdownarrows}
+\DeclareMathOperator*{\upr}{\uparrow}
+\DeclareMathOperator*{\lwr}{\downarrow}
+\DeclareMathOperator*{\uprx}{\mathrmtt{-90}{{\ot}\mathllap{\textcolor{white}{\bullet}}\mathllap{\circ}}}
+\DeclareMathOperator*{\lwrx}{\mathrmtt{90}{{\ot}\mathllap{\textcolor{white}{\bullet}}\mathllap{\circ}}}
+\DeclareMathOperator*{\uupr}{\upuparrows}
+\DeclareMathOperator*{\llwr}{\downdownarrows}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Category Theory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\op}{^\mr{op}}
-\newcommand{\Set}{\mbr{Set}}
-\newcommand{\Proset}{\mbr{Proset}}
-\newcommand{\Poset}{\mbr{Poset}}
-\newcommand{\Cat}{\mbr{Cat}}
-\newcommand{\SlimCat}{\mbr{SlimCat}}
-\newcommand{\SlimSkelCat}{\mbr{SlimSkelCat}}
-\newcommand{\SubObj}{\mbr{SubObj}}
-\renewcommand{\Top}{\mbr{Top}}
+\newcommand{\op}{^\mathrm{op}}
+\newcommand{\Set}{\mathbf{Set}}
+\newcommand{\Proset}{\mathbf{Proset}}
+\newcommand{\Poset}{\mathbf{Poset}}
+\newcommand{\Cat}{\mathbf{Cat}}
+\newcommand{\SlimCat}{\mathbf{SlimCat}}
+\newcommand{\SlimSkelCat}{\mathbf{SlimSkelCat}}
+\newcommand{\SubObj}{\mathbf{SubObj}}
+\renewcommand{\Top}{\mathbf{Top}}
 
 \newcommand{\Prl}{{\downdownarrows}}
 
-\declmop{\src}{src}
-\declmop{\tgt}{tgt}
-\newcommand{\dg}{\mr\Delta}
+\DeclareMathOperator{\src}{src}
+\DeclareMathOperator{\tgt}{tgt}
+\newcommand{\dg}{\mathrm\Delta}
 \newcommand{\term}{1}
 \newcommand{\init}{\emptyset}
 \newcommand{\zero}{0}
 \newcommand{\exc}{{!}}
 \newcommand{\cxe}{\text{\rm\textexclamdown}}
 \newcommand{\cxexc}{\cxe\!\exc}
-\declmop{\mil}{mil}
-\newcommand{\con}{\mr{con}}
-\newcommand{\noc}{\mr{noc}}
-\newcommand{\wdg}{\mr{wdg}}
-\newcommand{\gdw}{\mr{gdw}}
-\newcommand{\ucon}{\mr{ucon}}
-\newcommand{\unoc}{\mr{unoc}}
-\newcommand{\uwdg}{\mr{uwdg}}
-\newcommand{\ugdw}{\mr{ugdw}}
-\newcommand{\eq}{\mbn{\mr{eq}}}
-\newcommand{\qe}{\mbn{\mr{qe}}}
-\newcommand{\adj}{\mrl\dashv}
+\DeclareMathOperator{\mil}{mil}
+\newcommand{\con}{\mathrm{con}}
+\newcommand{\noc}{\mathrm{noc}}
+\newcommand{\wdg}{\mathrm{wdg}}
+\newcommand{\gdw}{\mathrm{gdw}}
+\newcommand{\ucon}{\mathrm{ucon}}
+\newcommand{\unoc}{\mathrm{unoc}}
+\newcommand{\uwdg}{\mathrm{uwdg}}
+\newcommand{\ugdw}{\mathrm{ugdw}}
+\newcommand{\eq}{\mathbin{\mathrm{eq}}}
+\newcommand{\qe}{\mathbin{\mathrm{qe}}}
+\newcommand{\adj}{\mathrel\dashv}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Analysis
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\e}{\mr{e}}
-\renewcommand{\i}{\mr{i}} % \i used to be a special character
+\newcommand{\e}{\mathrm{e}}
+\renewcommand{\i}{\mathrm{i}} % \i used to be a special character
 \newcommand{\py}{\uppi}
 \newcommand{\ify}{\infty}
 
 \let\Re\relax
-\declmop{\Re}{Re}
+\DeclareMathOperator{\Re}{Re}
 \let\Im\relax
-\declmop{\Im}{Im}
+\DeclareMathOperator{\Im}{Im}
 
-\newcommand{\cjgt}[1]{\Bar{#1}}
+\newcommand{\cjgt}[1]{\overline{#1}}
 
-\renewcommand{\d}{\mr d} % \d used to be a diacritic
-\newcommand{\D}{\mr D}
-\newcommand{\DRe}{\mb D_{\mr{Re}}}
-\newcommand{\DIm}{\mb D_{\mr{Im}}}
+\renewcommand{\d}{\mathrm d} % \d used to be a diacritic
+\newcommand{\D}{\mathrm D}
+\newcommand{\DRe}{\D_{\mathrm{Re}}}
+\newcommand{\DIm}{\D_{\mathrm{Im}}}
 
 \newcommand{\rt}[2][]{\sqrt[#1]{#2}}
 
-\declmop{\Log}{Log}
-\declmop{\Arg}{Arg}
-\declmop{\Ind}{Ind}
-\declmop{\Res}{Res}
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+\DeclareMathOperator{\Ind}{Ind}
+\DeclareMathOperator{\Res}{Res}
 
-\declmop{\sgn}{sgn}
+\DeclareMathOperator{\sgn}{sgn}
 
-\declmop{\uniflim}{unif\ lim}
-\newcommand{\unifto}[1][1]{\mos{\rm{unif}}{\to[#1]}}
+\DeclareMathOperator{\uniflim}{unif\ lim}
+\newcommand{\unifto}[1][1]{\overset{\rm{unif}}{\to[#1]}}
 
 \newcommand{\del}{\partial}
 
@@ -588,21 +590,24 @@
 % Algebra
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\declmop{\Ker}{Ker}
-\newcommand{\ve}{\mb{e}}
-\newcommand{\trs}{^\top}
+\DeclareMathOperator{\Ker}{Ker}
+\newcommand{\vectore}{\mb{e}}
+\newcommand{\transpose}{^\top}
+
+\newcommand{\ve}{\vectore}
+\newcommand{\trs}{\transpose}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Topology
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\open}{\mr{open}}
-\newcommand{\closed}{\mr{closed}}
-\newcommand{\neighbor}{\mr{neighbor}}
-\newcommand{\interior}{\mr{interior}}
-\newcommand{\limit}{\mr{limit}}
-\newcommand{\isolated}{\mr{isolated}}
-\newcommand{\connected}{\mr{connected}}
+\newcommand{\open}{\text{open}}
+\newcommand{\closed}{\text{closed}}
+\newcommand{\neighbor}{\text{neighbor}}
+\newcommand{\interior}{\text{interior}}
+\newcommand{\limit}{\text{limit}}
+\newcommand{\isolated}{\text{isolated}}
+\newcommand{\connected}{\text{connected}}
 \newcommand{\osub}{\sssub{\open}}
 \newcommand{\osubx}{\sssubx{\open}}
 \newcommand{\ocnsub}{\sssub{\open,\connected}}
@@ -622,30 +627,31 @@
 \newcommand{\intrin}{\ssin{\interior}}
 \newcommand{\limin}{\ssin{\limit}}
 \newcommand{\isltdin}{\ssin{\isolated}}
-\newcommand{\Cltopology}{\Cl{\tx{topology}}}
+\newcommand{\Cltopology}{\Cl{\text{topology}}}
 \newcommand{\dinf}{\d_{\inf}}
-\declmop{\diam}{diam}
-\declmop{\Nbr}{Nbr}
 
-\newcommand{\clsr}[1]{\Bar{#1}}
-\newcommand{\intr}[1]{{#1}^{\mr{\circ}}}
-\newcommand{\extr}[1]{{#1}^{\mr{\times}}}
+\DeclareMathOperator{\diam}{diam}
+\DeclareMathOperator{\Nbr}{Nbr}
+
+\newcommand{\clsr}[1]{\overline{#1}}
+\newcommand{\intr}[1]{{#1}^{\mathrm{\circ}}}
+\newcommand{\extr}[1]{{#1}^{\mathrm{\times}}}
 \newcommand{\bndr}[1]{\partial{#1}}
 
-\newcommand{\Tzero}{\esm{\mr{T_0}}}
-\newcommand{\Tone}{\esm{\mr{T_1}}}
-\newcommand{\Ttwo}{\esm{\mr{T_2}}}
-\newcommand{\Ttwohalf}{\esm{\mr{T_{2\sfrac{1}{2}}}}}
-\newcommand{\Tthree}{\esm{\mr{T_3}}}
-\newcommand{\Tthreehalf}{\esm{\mr{T_{3\sfrac{1}{2}}}}}
-\newcommand{\Tfour}{\esm{\mr{T_4}}}
-\newcommand{\Tfive}{\esm{\mr{T_5}}}
-\newcommand{\Tsix}{\esm{\mr{T_6}}}
-\newcommand{\Rzero}{\esm{\mr{R_0}}}
-\newcommand{\Rone}{\esm{\mr{R_1}}}
+\newcommand{\Tzero}{\ensuremath{\mathrm{T_0}}}
+\newcommand{\Tone}{\ensuremath{\mathrm{T_1}}}
+\newcommand{\Ttwo}{\ensuremath{\mathrm{T_2}}}
+\newcommand{\Ttwohalf}{\ensuremath{\mathrm{T_{2\sfrac{1}{2}}}}}
+\newcommand{\Tthree}{\ensuremath{\mathrm{T_3}}}
+\newcommand{\Tthreehalf}{\ensuremath{\mathrm{T_{3\sfrac{1}{2}}}}}
+\newcommand{\Tfour}{\ensuremath{\mathrm{T_4}}}
+\newcommand{\Tfive}{\ensuremath{\mathrm{T_5}}}
+\newcommand{\Tsix}{\ensuremath{\mathrm{T_6}}}
+\newcommand{\Rzero}{\ensuremath{\mathrm{R_0}}}
+\newcommand{\Rone}{\ensuremath{\mathrm{R_1}}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Probability and Statistics
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\declmop{\Ex}{E}
+\DeclareMathOperator{\Ex}{E}
