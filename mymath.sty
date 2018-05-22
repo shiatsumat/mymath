@@ -279,6 +279,8 @@
 \newcommand{\up}[2][0]{\upperparened[#1]{#2}}
 \newcommand{\ev}[2][1]{\evaluatedat[#1]{#2}}
 
+\newcommand{\set}[3][0]{\bracedvert[#1]{\,#2\ }{\ #3\,}}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Characters
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -557,25 +559,22 @@
 \DeclareMathOperator{\Im}{Im}
 
 \newcommand{\cjgt}[1]{\overline{#1}}
-
-\renewcommand{\d}{\mathrm d} % \d used to be a diacritic
-\newcommand{\D}{\mathrm D}
-\newcommand{\DRe}{\D_{\mathrm{Re}}}
-\newcommand{\DIm}{\D_{\mathrm{Im}}}
-
 \newcommand{\rt}[2][]{\sqrt[#1]{#2}}
 
 \DeclareMathOperator{\Log}{Log}
 \DeclareMathOperator{\Arg}{Arg}
 \DeclareMathOperator{\Ind}{Ind}
 \DeclareMathOperator{\Res}{Res}
-
 \DeclareMathOperator{\sgn}{sgn}
 
 \DeclareMathOperator{\uniflim}{unif\ lim}
 \newcommand{\unifto}[1][1]{\overset{\rm{unif}}{\to[#1]}}
 
 \newcommand{\del}{\partial}
+\renewcommand{\d}{\mathrm d} % \d used to be a diacritic
+\newcommand{\D}{\mathrm D}
+\newcommand{\DRe}{\D_{\mathrm{Re}}}
+\newcommand{\DIm}{\D_{\mathrm{Im}}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Algebra
@@ -646,6 +645,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \DeclareMathOperator{\Ex}{E}
+\DeclareMathOperator{\Var}{Var}
 
 \newcommand{\distto}[1][1]{\overset{d}{\to[#1]}}
 \newcommand{\probto}[1][1]{\overset{p}{\to[#1]}}
