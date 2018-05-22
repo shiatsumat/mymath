@@ -163,35 +163,34 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\makearrowr}[3][0]{\mathrel{\Repeat{#1}{#2\joinrel}#3}}
-\newcommand{\makearrowl}[3][0]{\mathrel{#2\Repeat{#1}{\joinrel#3}}}
 \newcommand{\makearrowb}[4][0]{\mathrel{#2\joinrel\Repeat{#1}{#3\joinrel}#4}}
 \newcommand{\makearrowx}[5][0]{\mathrel{\If{\CompareInt{#1}={0}}{#2}{#3\joinrel\Repeat{(#1) - 1}{#4\joinrel}#5}}}
 
 \renewcommand{\to}[1][0]{\makearrowr[#1]{\relbar}{\rightarrow}}
-\newcommand{\ot}[1][0]{\makearrowl[#1]{\leftarrow}{\relbar}}
+\newcommand{\ot}[1][0]{\mathrel{\mathreflect{\to[#1]}}}
 \newcommand{\To}[1][0]{\makearrowr[#1]{\Relbar}{\Rightarrow}}
-\newcommand{\oT}[1][0]{\makearrowl[#1]{\Leftarrow}{\Relbar}}
+\newcommand{\oT}[1][0]{\mathrel{\mathreflect{\oT[#1]}}}
 
 \newcommand{\tot}[1][0]{\makearrowx[#1]{\leftrightarrow}{\leftarrow}{\relbar}{\rightarrow}}
 \newcommand{\ToT}[1][0]{\makearrowx[#1]{\Leftrightarrow}{\Leftarrow}{\Relbar}{\Rightarrow}}
 
 % mapping
-\newcommand{\mto}[1][0]{\makearrowx[#1]{\mapsto}{\vdash}{\relbar}{\rightarrow}}
-\newcommand{\otm}[1][0]{\makearrowx[#1]{\mathreflect{\mapsto}}{\leftarrow}{\relbar}{\dashv}}
-\newcommand{\Mto}[1][0]{\makearrowb[#1]{\mathrel{\mathrms{0.23ex}{\mathscale{1}{0.6}{\mid}}\mkern-1mu}}{\Relbar}{\Rightarrow}}
-\newcommand{\otM}[1][0]{\makearrowb[#1]{\Leftarrow}{\Relbar}{\mkern-1mu\mathrel{\mathrms{0.23ex}{\mathscale{1}{0.6}{\mid}}\mkern-1mu}}}
+\renewcommand{\mapsto}[1][0]{\makearrowx[#1]{\mapsto}{\vdash}{\relbar}{\rightarrow}}
+\newcommand{\mapsot}[1][0]{\mathrel{\mathreflect{\mapsto[#1]}}}
+\newcommand{\mapsTo}[1][0]{\makearrowb[#1]{\mathrel{\mathrms{0.23ex}{\mathscale{1}{0.6}{\mid}}\mkern-1mu}}{\Relbar}{\Rightarrow}}
+\newcommand{\mapsoT}[1][0]{\mathrel{\mathreflect{\Mapsto[#1]}}}
 
 % partial
-\newcommand{\pto}[1][0]{\makearrowr[#1]{\relbar}{\rightharpoonup}}
-\newcommand{\otp}[1][0]{\makearrowl[#1]{\leftharpoonup}{\relbar}}
+\newcommand{\partto}[1][0]{\makearrowr[#1]{\relbar}{\rightharpoonup}}
+\newcommand{\partot}[1][0]{\mathrel{\mathreflect{\partto[#1]}}}
 
 % injective
-\newcommand{\ito}[1][0]{\makearrowb[#1]{\lhook}{\relbar}{\rightarrow}}
-\newcommand{\oti}[1][0]{\makearrowb[#1]{\leftarrow}{\relbar}{\rhook}}
+\newcommand{\injto}[1][0]{\makearrowb[#1]{\lhook}{\relbar}{\rightarrow}}
+\newcommand{\injot}[1][0]{\mathrel{\mathreflect{\injto[#1]}}}
 
 % surjective
-\newcommand{\sto}[1][0]{\makearrowr[#1]{\relbar}{\rightarrow\kern-1.8ex\rightarrow}}
-\newcommand{\ots}[1][0]{\makearrowl[#1]{\leftarrow\kern-1.8ex\leftarrow}{\relbar}}
+\newcommand{\surjto}[1][0]{\makearrowr[#1]{\relbar}{\rightarrow\kern-1.8ex\rightarrow}}
+\newcommand{\surjot}[1][0]{\mathrel{\mathreflect{\surjto[#1]}}}
 
 \newcommand{\toto}{\rightrightarrows}
 \newcommand{\otot}{\leftleftarrows}
@@ -199,20 +198,20 @@
 \newcommand{\otto}{\leftrightarrows}
 
 % vertical
-\newcommand{\uto}[1][0]{\mathrel{\mathrmtt{90}{\to[#1]}}}
-\newcommand{\dto}[1][0]{\mathrel{\mathrmtt{-90}{\to[#1]}}}
-\newcommand{\uTo}[1][0]{\mathrel{\mathrmtt{90}{\To[#1]}}}
-\newcommand{\dTo}[1][0]{\mathrel{\mathrmtt{-90}{\To[#1]}}}
+\newcommand{\upto}[1][0]{\mathrel{\mathrotate{90}{\to[#1]}}}
+\newcommand{\downto}[1][0]{\mathrel{\mathrotate{-90}{\to[#1]}}}
+\newcommand{\upTo}[1][0]{\mathrel{\mathrotate{90}{\To[#1]}}}
+\newcommand{\downTo}[1][0]{\mathrel{\mathrotate{-90}{\To[#1]}}}
 
 % diagonal
-\newcommand{\ulto}[1][0]{\mathrel{\mathrmtt{135}{\to[#1]}}}
-\newcommand{\urto}[1][0]{\mathrel{\mathrmtt{45}{\to[#1]}}}
-\newcommand{\dlto}[1][0]{\mathrel{\mathrmtt{-135}{\to[#1]}}}
-\newcommand{\drto}[1][0]{\mathrel{\mathrmtt{-45}{\to[#1]}}}
-\newcommand{\ulTo}[1][0]{\mathrel{\mathrmtt{135}{\To[#1]}}}
-\newcommand{\urTo}[1][0]{\mathrel{\mathrmtt{45}{\To[#1]}}}
-\newcommand{\dlTo}[1][0]{\mathrel{\mathrmtt{-135}{\To[#1]}}}
-\newcommand{\drTo}[1][0]{\mathrel{\mathrmtt{-45}{\To[#1]}}}
+\newcommand{\upleftto}[1][0]{\mathrel{\mathrotate{135}{\to[#1]}}}
+\newcommand{\uprightto}[1][0]{\mathrel{\mathrotate{45}{\to[#1]}}}
+\newcommand{\downleftto}[1][0]{\mathrel{\mathrotate{-135}{\to[#1]}}}
+\newcommand{\downrightto}[1][0]{\mathrel{\mathrotate{-45}{\to[#1]}}}
+\newcommand{\upleftTo}[1][0]{\mathrel{\mathrotate{135}{\To[#1]}}}
+\newcommand{\uprightTo}[1][0]{\mathrel{\mathrotate{45}{\To[#1]}}}
+\newcommand{\downleftTo}[1][0]{\mathrel{\mathrotate{-135}{\To[#1]}}}
+\newcommand{\downrightTo}[1][0]{\mathrel{\mathrotate{-45}{\To[#1]}}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -354,13 +353,13 @@
 \newcommand{\cz}{\ensuremath{\because}\xspace}
 \newcommand{\imp}{\ensuremath{\mathrel{\Longrightarrow}}\xspace}
 \newcommand{\pmi}{\ensuremath{\mathrel{\Longleftarrow}}\xspace}
-\renewcommand{\land}{\mathrel{\text{and}}}
-\renewcommand{\lor}{\mathrel{\text{or}}}
+\renewcommand{\land}{\mathrel{\mathrm{and}}}
+\renewcommand{\lor}{\mathrel{\mathrm{or}}}
 
 \newcommand{\w}{\colon}
 
-\newcommand{\when}{\mathrel{\text{when}}}
-\newcommand{\othws}{\mathrel{\text{otherwise}}}
+\newcommand{\when}{\mathrel{\mathrm{when}}}
+\newcommand{\othws}{\mathrel{\mathrm{otherwise}}}
 
 \newcommand{\dfd}{\downarrow}
 \newcommand{\undfd}{\uparrow}
@@ -501,16 +500,9 @@
 \newcommand{\join}{\mathbin\vee}
 \newcommand{\meet}{\mathbin\wedge}
 \renewcommand{\Join}{\bigvee}
-\DeclareMathOperator{\Joind}{\bigvee_{\mathllap{\uparrow}}}
+\DeclareMathOperator{\Joindirected}{\bigvee_{\mathllap{\uparrow}}}
 \newcommand{\Meet}{\bigwedge}
-\DeclareMathOperator{\Meetd}{\bigwedge{\mathllap{\downarrow}}}
-
-\DeclareMathOperator*{\upr}{\uparrow}
-\DeclareMathOperator*{\lwr}{\downarrow}
-\DeclareMathOperator*{\uprx}{\mathrmtt{-90}{{\ot}\mathllap{\textcolor{white}{\bullet}}\mathllap{\circ}}}
-\DeclareMathOperator*{\lwrx}{\mathrmtt{90}{{\ot}\mathllap{\textcolor{white}{\bullet}}\mathllap{\circ}}}
-\DeclareMathOperator*{\uupr}{\upuparrows}
-\DeclareMathOperator*{\llwr}{\downdownarrows}
+\DeclareMathOperator{\Meetddirected}{\bigwedge{\mathllap{\downarrow}}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Category Theory
@@ -600,13 +592,13 @@
 % Topology
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\open}{\text{open}}
-\newcommand{\closed}{\text{closed}}
-\newcommand{\neighbor}{\text{neighbor}}
-\newcommand{\interior}{\text{interior}}
-\newcommand{\limit}{\text{limit}}
-\newcommand{\isolated}{\text{isolated}}
-\newcommand{\connected}{\text{connected}}
+\newcommand{\open}{\mathrm{open}}
+\newcommand{\closed}{\mathrm{closed}}
+\newcommand{\neighbor}{\mathrm{neighbor}}
+\newcommand{\interior}{\mathrm{interior}}
+\newcommand{\limit}{\mathrm{limit}}
+\newcommand{\isolated}{\mathrm{isolated}}
+\newcommand{\connected}{\mathrm{connected}}
 \newcommand{\osub}{\sssub{\open}}
 \newcommand{\osubx}{\sssubx{\open}}
 \newcommand{\ocnsub}{\sssub{\open,\connected}}
@@ -626,7 +618,7 @@
 \newcommand{\intrin}{\ssin{\interior}}
 \newcommand{\limin}{\ssin{\limit}}
 \newcommand{\isltdin}{\ssin{\isolated}}
-\newcommand{\Cltopology}{\Cl{\text{topology}}}
+\newcommand{\Cltopology}{\Cl{\mathrm{topology}}}
 \newcommand{\dinf}{\d_{\inf}}
 
 \DeclareMathOperator{\diam}{diam}
@@ -654,3 +646,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \DeclareMathOperator{\Ex}{E}
+
+\newcommand{\distto}[1][1]{\overset{d}{\to[#1]}}
+\newcommand{\probto}[1][1]{\overset{p}{\to[#1]}}
