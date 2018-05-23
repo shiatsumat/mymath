@@ -175,7 +175,8 @@
 \newcommand{\ToT}[1][0]{\makearrowx[#1]{\Leftrightarrow}{\Leftarrow}{\Relbar}{\Rightarrow}}
 
 % mapping
-\renewcommand{\mapsto}[1][0]{\makearrowx[#1]{\mapsto}{\vdash}{\relbar}{\rightarrow}}
+\let\oldmapsto\mapsto
+\renewcommand{\mapsto}[1][0]{\makearrowx[#1]{\oldmapsto}{\vdash}{\relbar}{\rightarrow}}
 \newcommand{\mapsot}[1][0]{\mathrel{\mathreflect{\mapsto[#1]}}}
 \newcommand{\mapsTo}[1][0]{\makearrowb[#1]{\mathrel{\mathrms{0.23ex}{\mathscale{1}{0.6}{\mid}}\mkern-1mu}}{\Relbar}{\Rightarrow}}
 \newcommand{\mapsoT}[1][0]{\mathrel{\mathreflect{\Mapsto[#1]}}}
@@ -571,6 +572,7 @@
 \newcommand{\unifto}[1][1]{\overset{\rm{unif}}{\to[#1]}}
 
 \newcommand{\del}{\partial}
+\newcommand{\nablas}{\bm \nabla}
 \renewcommand{\d}{\mathrm d} % \d used to be a diacritic
 \newcommand{\D}{\mathrm D}
 \newcommand{\DRe}{\D_{\mathrm{Re}}}
@@ -581,7 +583,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \DeclareMathOperator{\Ker}{Ker}
-\newcommand{\vectore}{\mb{e}}
+\newcommand{\vectore}{\bm{e}}
 \newcommand{\transpose}{^\top}
 
 \newcommand{\ve}{\vectore}
