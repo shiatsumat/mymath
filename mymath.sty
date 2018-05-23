@@ -174,44 +174,37 @@
 \newcommand{\tot}[1][0]{\makearrowx[#1]{\leftrightarrow}{\leftarrow}{\relbar}{\rightarrow}}
 \newcommand{\ToT}[1][0]{\makearrowx[#1]{\Leftrightarrow}{\Leftarrow}{\Relbar}{\Rightarrow}}
 
-% mapping
 \let\oldmapsto\mapsto
 \renewcommand{\mapsto}[1][0]{\makearrowx[#1]{\oldmapsto}{\vdash}{\relbar}{\rightarrow}}
 \newcommand{\mapsot}[1][0]{\mathrel{\mathreflect{\mapsto[#1]}}}
 \newcommand{\mapsTo}[1][0]{\makearrowb[#1]{\mathrel{\mathrms{0.23ex}{\mathscale{1}{0.6}{\mid}}\mkern-1mu}}{\Relbar}{\Rightarrow}}
 \newcommand{\mapsoT}[1][0]{\mathrel{\mathreflect{\Mapsto[#1]}}}
 
-% partial
 \newcommand{\partto}[1][0]{\makearrowr[#1]{\relbar}{\rightharpoonup}}
 \newcommand{\partot}[1][0]{\mathrel{\mathreflect{\partto[#1]}}}
 
-% injective
-\newcommand{\injto}[1][0]{\makearrowb[#1]{\lhook}{\relbar}{\rightarrow}}
-\newcommand{\injot}[1][0]{\mathrel{\mathreflect{\injto[#1]}}}
+\newcommand{\monicto}[1][0]{\makearrowb[#1]{\lhook}{\relbar}{\rightarrow}}
+\newcommand{\monicot}[1][0]{\mathrel{\mathreflect{\monicto[#1]}}}
 
-% surjective
-\newcommand{\surjto}[1][0]{\makearrowr[#1]{\relbar}{\rightarrow\kern-1.8ex\rightarrow}}
-\newcommand{\surjot}[1][0]{\mathrel{\mathreflect{\surjto[#1]}}}
+\newcommand{\epicto}[1][0]{\makearrowr[#1]{\relbar}{\rightarrow\kern-1.8ex\rightarrow}}
+\newcommand{\epicot}[1][0]{\mathrel{\mathreflect{\epicto[#1]}}}
 
 \newcommand{\toto}{\rightrightarrows}
 \newcommand{\otot}{\leftleftarrows}
 \newcommand{\toot}{\rightleftarrows}
 \newcommand{\otto}{\leftrightarrows}
 
-% vertical
 \newcommand{\upto}[1][0]{\mathrel{\mathrotate{90}{\to[#1]}}}
-\newcommand{\downto}[1][0]{\mathrel{\mathrotate{-90}{\to[#1]}}}
 \newcommand{\upTo}[1][0]{\mathrel{\mathrotate{90}{\To[#1]}}}
+\newcommand{\downto}[1][0]{\mathrel{\mathrotate{-90}{\to[#1]}}}
 \newcommand{\downTo}[1][0]{\mathrel{\mathrotate{-90}{\To[#1]}}}
-
-% diagonal
 \newcommand{\upleftto}[1][0]{\mathrel{\mathrotate{135}{\to[#1]}}}
-\newcommand{\uprightto}[1][0]{\mathrel{\mathrotate{45}{\to[#1]}}}
-\newcommand{\downleftto}[1][0]{\mathrel{\mathrotate{-135}{\to[#1]}}}
-\newcommand{\downrightto}[1][0]{\mathrel{\mathrotate{-45}{\to[#1]}}}
 \newcommand{\upleftTo}[1][0]{\mathrel{\mathrotate{135}{\To[#1]}}}
+\newcommand{\uprightto}[1][0]{\mathrel{\mathrotate{45}{\to[#1]}}}
 \newcommand{\uprightTo}[1][0]{\mathrel{\mathrotate{45}{\To[#1]}}}
+\newcommand{\downleftto}[1][0]{\mathrel{\mathrotate{-135}{\to[#1]}}}
 \newcommand{\downleftTo}[1][0]{\mathrel{\mathrotate{-135}{\To[#1]}}}
+\newcommand{\downrightto}[1][0]{\mathrel{\mathrotate{-45}{\to[#1]}}}
 \newcommand{\downrightTo}[1][0]{\mathrel{\mathrotate{-45}{\To[#1]}}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
