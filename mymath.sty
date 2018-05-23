@@ -73,6 +73,12 @@
 \ExplSyntaxOff
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Graphics
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newenvironment{figcenter}{\begin{figure}[H]\centering}{\end{figure}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Math Controls
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -214,37 +220,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Utilities
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newcommand{\m}[1]{\emph{#1}}
-
-\newenvironment{figcenter}{\begin{figure}[H]\centering}{\end{figure}}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Controls
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newcommand{\ds}{\displaystyle}
-
-\newcommand{\mr}[1]{\mathrm{#1}}
-\newcommand{\mt}[1]{\mathtt{#1}}
-\newcommand{\mb}[1]{\bm{#1}}
-\newcommand{\mbr}[1]{\mathbf{#1}}
-\newcommand{\mbb}[1]{\mathbb{#1}}
-\newcommand{\msf}[1]{\mathsf{#1}}
-\newcommand{\mcl}[1]{\mathcal{#1}}
-\newcommand{\msc}[1]{\mathscr{#1}}
-\newcommand{\mfr}[1]{\mathfrak{#1}}
-
-\newcommand{\q}{\quad}
-\newcommand{\qq}{\qquad}
-
-\newcommand{\tx}{\text}
-\newcommand{\itx}{\intertext}
-\newcommand{\sitx}{\shortintertext}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Math Brackets
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -328,37 +303,23 @@
 \newcommand{\CC}{\mathbb{C}}
 \newcommand{\CCc}{\hat{\mathbb{C}}}
 
-\newcommand{\prm}[1][1]{^{\Repeat{#1}{\prime}}}
-
-\newcommand{\sect}{\relax\ifmmode\mathsection\else\textsection\fi}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Everyday Logic
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\defeq}{\mathrel{\vcentcolon=}}
 \newcommand{\eqdef}{\mathrel{=\vcentcolon}}
-\newcommand{\A}[1]{\forall\,#1.\,\ }
-\renewcommand{\AA}[1]{\forall\,#1}
-\newcommand{\E}[1]{\exists\,#1.\ }
-\newcommand{\EE}[1]{\exists\,#1}
 \renewcommand{\iff}{\ensuremath{\mathrel{\Longleftrightarrow}}\xspace}
 \newcommand{\defiff}{\ensuremath{\mathrel{\vcentcolon\iff}}}
 \newcommand{\iffdef}{\ensuremath{\mathrel{\iff\vcentcolon}}}
-\newcommand{\so}{\ensuremath{\therefore}\xspace}
-\newcommand{\cz}{\ensuremath{\because}\xspace}
-\newcommand{\imp}{\ensuremath{\mathrel{\Longrightarrow}}\xspace}
-\newcommand{\pmi}{\ensuremath{\mathrel{\Longleftarrow}}\xspace}
+\renewcommand{\implies}{\ensuremath{\mathrel{\Longrightarrow}}\xspace}
+\renewcommand{\impliedby}{\ensuremath{\mathrel{\Longleftarrow}}\xspace}
 \renewcommand{\land}{\mathrel{\mathrm{and}}}
 \renewcommand{\lor}{\mathrel{\mathrm{or}}}
 
-\newcommand{\w}{\colon}
-
 \newcommand{\when}{\mathrel{\mathrm{when}}}
-\newcommand{\othws}{\mathrel{\mathrm{otherwise}}}
+\newcommand{\otherwise}{\mathrel{\mathrm{otherwise}}}
 
-\newcommand{\dfd}{\downarrow}
-\newcommand{\undfd}{\uparrow}
 \newcommand{\ex}[1]{\mathrel{\underset{\to}{#1}}}
 \newcommand{\xe}[1]{\mathrel{\underset{\ot}{#1}}}
 \newcommand{\xx}[1]{\mathrel{\underset{\tot}{#1}}}
@@ -367,57 +328,28 @@
 % Formal Logic
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\yld}{\mathrel{\vdash}}
-\newcommand{\nyld}{\mathrel{\nvdash}}
-\newcommand{\mdl}{\mathrel{\vDash}}
-\newcommand{\nmdl}{\mathrel{\nvDash}}
+\newcommand{\yields}{\mathrel{\vdash}}
+\newcommand{\nyields}{\mathrel{\vdash}}
+\renewcommand{\models}{\mathrel{\vDash}}
+\newcommand{\nmodels}{\mathrel{\nvDash}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Everyday Set Theory
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\gez}{_{\ge 0}}
-\newcommand{\gtz}{_{> 0}}
-\newcommand{\lez}{_{\le 0}}
-\newcommand{\ltz}{_{< 0}}
-
 \newcommand{\eqv}{\equiv}
 \newcommand{\iso}{\simeq}
 
-\newcommand{\finite}{\mathrm{finite}}
-\newcommand{\finitepls}{\mathrm{finite}^+}
-\newcommand{\infinite}{\mathrm{infinite}}
-\newcommand{\infinitepls}{\mathrm{infinite}^+}
-\newcommand{\infinitepsbl}{\mathrm{infinite}^?}
-\newcommand{\infinitepsblpls}{\mathrm{infinite}^{?+}}
-\newcommand{\cofinite}{\mathrm{cofinite}}
 \newcommand{\power}{\mathcal P}
-\newcommand{\pwr}{\power}
 
-\newcommand{\nin}{\notin}
 \newcommand{\emp}{\varnothing}
-
+\newcommand{\nin}{\notin}
 \newcommand{\sub}{\subseteq}
 \newcommand{\nsub}{\nsubseteq}
-\newcommand{\spr}{\supseteq}
-\newcommand{\nspr}{\nsupseteq}
+\newcommand{\super}{\supseteq}
+\newcommand{\nsuper}{\nsupseteq}
 \newcommand{\subx}{\subsetneq}
-\newcommand{\sprx}{\supsetneq}
-
-\newcommand{\sssub}[1]{{}_{#1}\all\sub}
-\newcommand{\sssubx}[1]{{}_{#1}\nolinebreak[1]\subx}
-\newcommand{\ssspr}[1]{{}_{#1}\nolinebreak[1]\spr}
-\newcommand{\sssprx}[1]{{}_{#1}\nolinebreak[1]\sprx}
-\newcommand{\ssni}[1]{{}_{#1}\nolinebreak[1]\ni}
-\newcommand{\ssin}[1]{{}_{#1}\nolinebreak[1]\in}
-\newcommand{\isub}{\sssub{\ne\emp}}
-\newcommand{\isubx}{\sssubx{\ne\emp}}
-\newcommand{\finitesub}{\sssub{\finite}}
-\newcommand{\finitesubx}{\sssubx{\finite}}
-\newcommand{\finiteplssub}{\sssub{\finitepls}}
-\newcommand{\finiteplssubx}{\sssubx{\finitepls}}
-\newcommand{\coinitesub}{\sssub{\cofinite}}
-\newcommand{\cofinitesubx}{\sssubx{\cofinite}}
+\newcommand{\superx}{\supsetneq}
 
 \newcommand{\sand}{\cap}
 \newcommand{\Sand}{\bigcap}
@@ -428,34 +360,18 @@
 \newcommand{\diff}{\smallsetminus}
 \newcommand{\sdiff}{\mathbin{\triangle}}
 \newcommand{\co}{^{\mathsf{c}}}
-\newcommand{\X}{\times}
 
+\newcommand{\X}{\times}
 \newcommand{\oX}{\otimes}
 \newcommand{\OX}{\bigotimes}
 \newcommand{\opl}{\oplus}
 \newcommand{\Opl}{\bigoplus}
 
-\newcommand{\inv}{^{-1}}
-
-\newcommand{\Cl}[1]{\mathop{Cl}_{#1}}
-\newcommand{\Clfinite}[1]{\Cl{\finite\,#1}}
-\newcommand{\Clfinitepls}[1]{\Cl{\finitepls#1}}
-\newcommand{\Clinfinite}[1]{\Cl{\infinite\,#1}}
-\newcommand{\Clinfinitepls}[1]{\Cl{\infinitepls\,#1}}
-\newcommand{\Clinfinitepsbl}[1]{\Cl{\infinitepsbl\,#1}}
-\newcommand{\Clinfinitepsblpls}[1]{\Cl{\infinitepsblpls\,#1}}
-
-\newcommand{\Clfilter}{\Cl{\mathrm{filter}}}
-
-\DeclareMathOperator{\fst}{fst}
-\DeclareMathOperator{\snd}{snd}
-\DeclareMathOperator{\thd}{thd}
-\DeclareMathOperator{\ord}{ord}
+\newcommand{\inverse}{^{-1}}
+\newcommand{\inv}{\inverse}
 
 \renewcommand{\o}{\mathbin{\circ}} % \o used to be a special character
 \newcommand{\oc}{\mathbin{\zcmp}}
-\newcommand{\pa}{\mathbin{\triangleleft}}
-\newcommand{\ap}{\mathbin{\triangleright}}
 \newcommand{\cd}{\mathbin{\cdot}}
 \newcommand{\dc}{\mathbin{;}}
 
@@ -489,10 +405,6 @@
 \newcommand{\Qor}{\bigsqcup}
 
 \DeclareMathOperator{\argmax}{argmax}
-\DeclareMathOperator{\Max}{Max}
-\DeclareMathOperator{\Min}{Min}
-\DeclareMathOperator{\Ub}{Ub}
-\DeclareMathOperator{\Lb}{Lb}
 
 \newcommand{\join}{\mathbin\vee}
 \newcommand{\meet}{\mathbin\wedge}
@@ -506,46 +418,21 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\op}{^\mathrm{op}}
-\newcommand{\Set}{\mathbf{Set}}
-\newcommand{\Proset}{\mathbf{Proset}}
-\newcommand{\Poset}{\mathbf{Poset}}
-\newcommand{\Cat}{\mathbf{Cat}}
-\newcommand{\SlimCat}{\mathbf{SlimCat}}
-\newcommand{\SlimSkelCat}{\mathbf{SlimSkelCat}}
-\newcommand{\SubObj}{\mathbf{SubObj}}
-\renewcommand{\Top}{\mathbf{Top}}
 
-\newcommand{\Prl}{{\downdownarrows}}
+\newcommand{\Set}{\mathbf{Set}}
+\newcommand{\Cat}{\mathbf{Cat}}
+\renewcommand{\Top}{\mathbf{Top}}
 
 \DeclareMathOperator{\src}{src}
 \DeclareMathOperator{\tgt}{tgt}
-\newcommand{\dg}{\mathrm\Delta}
-\newcommand{\term}{1}
-\newcommand{\init}{\emptyset}
-\newcommand{\zero}{0}
-\newcommand{\exc}{{!}}
-\newcommand{\cxe}{\text{\rm\textexclamdown}}
-\newcommand{\cxexc}{\cxe\!\exc}
-\DeclareMathOperator{\mil}{mil}
-\newcommand{\con}{\mathrm{con}}
-\newcommand{\noc}{\mathrm{noc}}
-\newcommand{\wdg}{\mathrm{wdg}}
-\newcommand{\gdw}{\mathrm{gdw}}
-\newcommand{\ucon}{\mathrm{ucon}}
-\newcommand{\unoc}{\mathrm{unoc}}
-\newcommand{\uwdg}{\mathrm{uwdg}}
-\newcommand{\ugdw}{\mathrm{ugdw}}
-\newcommand{\eq}{\mathbin{\mathrm{eq}}}
-\newcommand{\qe}{\mathbin{\mathrm{qe}}}
-\newcommand{\adj}{\mathrel\dashv}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Analysis
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\e}{\bm{e}}
+\newcommand{\es}{\bm{e}}
 \renewcommand{\i}{\mathrm{i}} % \i used to be a special character
-\newcommand{\py}{\uppi}
+\newcommand{\PI}{\uppi}
 \newcommand{\ify}{\infty}
 
 \let\Re\relax
@@ -553,8 +440,8 @@
 \let\Im\relax
 \DeclareMathOperator{\Im}{Im}
 
-\newcommand{\cjgt}[1]{\overline{#1}}
 \newcommand{\rt}[2][]{\sqrt[#1]{#2}}
+\newcommand{\conjugate}[1]{\overline{#1}}
 
 \DeclareMathOperator{\Log}{Log}
 \DeclareMathOperator{\Arg}{Arg}
@@ -577,71 +464,28 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \DeclareMathOperator{\Ker}{Ker}
-\newcommand{\vectore}{\bm{e}}
-\newcommand{\transpose}{^\top}
 
-\newcommand{\ve}{\vectore}
+\newcommand{\transpose}{^\top}
 \newcommand{\trs}{\transpose}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Topology
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\open}{\mathrm{open}}
-\newcommand{\closed}{\mathrm{closed}}
-\newcommand{\neighbor}{\mathrm{neighbor}}
-\newcommand{\interior}{\mathrm{interior}}
-\newcommand{\limit}{\mathrm{limit}}
-\newcommand{\isolated}{\mathrm{isolated}}
-\newcommand{\connected}{\mathrm{connected}}
-\newcommand{\osub}{\sssub{\open}}
-\newcommand{\osubx}{\sssubx{\open}}
-\newcommand{\ocnsub}{\sssub{\open,\connected}}
-\newcommand{\ocnsubx}{\sssubx{\open,\connected}}
-\newcommand{\oisub}{\sssub{\open,\ne\emp}}
-\newcommand{\oisubx}{\sssubx{\open,\ne\emp}}
-\newcommand{\ospr}{\ssspr{\open}}
-\newcommand{\osprx}{\sssprx{\open}}
-\newcommand{\csub}{\sssub{\closed}}
-\newcommand{\csubx}{\sssubx{\closed}}
-\newcommand{\cisub}{\sssub{\closed,\ne\emp}}
-\newcommand{\cisubx}{\sssubx{\closed,\ne\emp}}
-\newcommand{\cspr}{\ssspr{\closed}}
-\newcommand{\csprx}{\sssprx{\closed}}
-\newcommand{\oni}{\ssni{\open}}
-\newcommand{\nbni}{\ssni{\neighbor}}
-\newcommand{\intrin}{\ssin{\interior}}
-\newcommand{\limin}{\ssin{\limit}}
-\newcommand{\isltdin}{\ssin{\isolated}}
-\newcommand{\Cltopology}{\Cl{\mathrm{topology}}}
-\newcommand{\dinf}{\d_{\inf}}
-
 \DeclareMathOperator{\diam}{diam}
-\DeclareMathOperator{\Nbr}{Nbr}
 
-\newcommand{\clsr}[1]{\overline{#1}}
-\newcommand{\intr}[1]{{#1}^{\mathrm{\circ}}}
-\newcommand{\extr}[1]{{#1}^{\mathrm{\times}}}
-\newcommand{\bndr}[1]{\partial{#1}}
-
-\newcommand{\Tzero}{\ensuremath{\mathrm{T_0}}}
-\newcommand{\Tone}{\ensuremath{\mathrm{T_1}}}
-\newcommand{\Ttwo}{\ensuremath{\mathrm{T_2}}}
-\newcommand{\Ttwohalf}{\ensuremath{\mathrm{T_{2\sfrac{1}{2}}}}}
-\newcommand{\Tthree}{\ensuremath{\mathrm{T_3}}}
-\newcommand{\Tthreehalf}{\ensuremath{\mathrm{T_{3\sfrac{1}{2}}}}}
-\newcommand{\Tfour}{\ensuremath{\mathrm{T_4}}}
-\newcommand{\Tfive}{\ensuremath{\mathrm{T_5}}}
-\newcommand{\Tsix}{\ensuremath{\mathrm{T_6}}}
-\newcommand{\Rzero}{\ensuremath{\mathrm{R_0}}}
-\newcommand{\Rone}{\ensuremath{\mathrm{R_1}}}
+\newcommand{\closure}[1]{\overline{#1}}
+\newcommand{\interior}{^\circ}
+\newcommand{\exterior}{^\times}
+\newcommand{\boundary}{\partial}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Probability and Statistics
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\DeclareMathOperator{\Ex}{E}
+\DeclareMathOperator{\E}{E}
 \DeclareMathOperator{\Var}{Var}
 
 \newcommand{\distto}[1][1]{\overset{d}{\to[#1]}}
 \newcommand{\probto}[1][1]{\overset{p}{\to[#1]}}
+\newcommand{\asto}[1][1]{\overset{\mathrm{a.s.}}{\to[#1]}}
