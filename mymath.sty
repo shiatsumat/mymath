@@ -6,6 +6,10 @@
 % \documentclass[dvipdfmx, uplatex]{jsarticle}
 %
 
+\usepackage{silence}
+\WarningsOff[latexfont]
+\WarningsOff[caption]
+
 \usepackage{hyperref}
 \hypersetup{
 	pdfborder={0 0 0},
@@ -19,16 +23,17 @@
 \usepackage{pxjahyper}
 
 \usepackage[left=15mm,right=15mm,head=15mm,foot=15mm]{geometry}
-\usepackage{color, graphicx, tikz-cd, here, tabularx}
 
 \usepackage{makeidx, expl3, xparse, xspace, url, pxrubrica, nameref}
-\usepackage{listings, algorithm, algpseudocode}
+\usepackage{color, graphicx, tikz-cd, here, tabularx}
+\usepackage{listings, algorithm, algpseudocode, caption}
 \lstset{
   basicstyle=\ttfamily\footnotesize,
   keywordstyle=\color{magenta}\bfseries,
   stringstyle=\color{blue},
   commentstyle=\color{green}\itshape,
   xleftmargin=20pt, xrightmargin=20pt, frame=single}
+\captionsetup[algorithm]{labelsep=period}
 \makeatletter
 \newenvironment{algotabular}%
   {\tabularx{\dimexpr\linewidth-\ALG@thistlm}[t]{@{}X@{}}}%
@@ -63,8 +68,6 @@
 }
 \makeatother
 \usepackage[scr]{rsfso}
-\usepackage{silence}
-\WarningsOff[latexfont]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Utility
