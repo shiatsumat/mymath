@@ -19,16 +19,21 @@
 \usepackage{pxjahyper}
 
 \usepackage[left=15mm,right=15mm,head=15mm,foot=15mm]{geometry}
-\usepackage{color, graphicx, tikz-cd, here}
+\usepackage{color, graphicx, tikz-cd, here, tabularx}
 
-\usepackage{makeidx, expl3, xparse, xspace, url, pxrubrica}
-\usepackage{listings}
+\usepackage{makeidx, expl3, xparse, xspace, url, pxrubrica, nameref}
+\usepackage{listings, algorithm, algpseudocode}
 \lstset{
   basicstyle=\ttfamily\footnotesize,
   keywordstyle=\color{magenta}\bfseries,
   stringstyle=\color{blue},
   commentstyle=\color{green}\itshape,
   xleftmargin=20pt, xrightmargin=20pt, frame=single}
+\makeatletter
+\newenvironment{algotabular}%
+  {\tabularx{\dimexpr\linewidth-\ALG@thistlm}[t]{@{}X@{}}}%
+  {\endtabularx}
+\makeatother
 
 \usepackage{mathtools}
 \mathtoolsset{showonlyrefs=true, showmanualtags}
@@ -66,17 +71,21 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \ExplSyntaxOn
-\cs_new_eq:NN \Repeat \prg_replicate:nn
-\cs_new_eq:NN \If \bool_if:nTF
+\cs_new_eq:NN \Replicate \prg_replicate:nn
+\cs_new_eq:NN \IfThenElse \bool_if:nTF
 \cs_new_eq:NN \CompareInt \int_compare_p:nNn
-\cs_new_eq:NN \IfTokenEq \token_if_eq_meaning:NNTF
+\cs_new_eq:NN \IfEqThenElse \token_if_eq_meaning:NNTF
 \ExplSyntaxOff
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Graphics
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newenvironment{figcenter}{\begin{figure}[H]\centering}{\end{figure}}
+\newenvironment{figcenter}[1][H]{%
+  \begin{figure}[#1]\centering%
+}{%
+  \end{figure}%
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Math Controls
@@ -106,33 +115,33 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\leftright}[4][0]{%
-	\If{\CompareInt{#1}={0}}{%
-		\IfTokenEq{#2}{.}{}{#2}#4%
-		\IfTokenEq{#3}{.}{}{#3}%
-	}{\If{\CompareInt{#1}={1}}{%
+	\IfThenElse{\CompareInt{#1}={0}}{%
+		\IfEqThenElse{#2}{.}{}{#2}#4%
+		\IfEqThenElse{#3}{.}{}{#3}%
+	}{\IfThenElse{\CompareInt{#1}={1}}{%
 		\bigl#2#4\bigr#3%
-	}{\If{\CompareInt{#1}={2}}{%
+	}{\IfThenElse{\CompareInt{#1}={2}}{%
 		\Bigl#2#4\Bigr#3%
-	}{\If{\CompareInt{#1}={3}}{%
+	}{\IfThenElse{\CompareInt{#1}={3}}{%
 		\biggl#2#4\biggr#3%
-	}{\If{\CompareInt{#1}={4}}{%
+	}{\IfThenElse{\CompareInt{#1}={4}}{%
 		\Biggl#2#4\Biggr#3%
 	}{%
 		\errmessage{leftright: illegal optional argument}%
 	}}}}}%
 }
 \newcommand{\leftmidright}[6][0]{%
-	\If{\CompareInt{#1}={0}}{%
-		\IfTokenEq{#2}{.}{}{#2}#5%
-		\IfTokenEq{#3}{.}{}{#3}#6%
-		\IfTokenEq{#4}{.}{}{#4}%
-	}{\If{\CompareInt{#1}={1}}{%
+	\IfThenElse{\CompareInt{#1}={0}}{%
+		\IfEqThenElse{#2}{.}{}{#2}#5%
+		\IfEqThenElse{#3}{.}{}{#3}#6%
+		\IfEqThenElse{#4}{.}{}{#4}%
+	}{\IfThenElse{\CompareInt{#1}={1}}{%
 		\bigl#2#5\bigm#3#6\bigr#4%
-	}{\If{\CompareInt{#1}={2}}{%
+	}{\IfThenElse{\CompareInt{#1}={2}}{%
 		\Bigl#2#5\Bigm#3#6\Bigr#4%
-	}{\If{\CompareInt{#1}={3}}{%
+	}{\IfThenElse{\CompareInt{#1}={3}}{%
 		\biggl#2#5\biggm#3#6\biggr#4%
-	}{\If{\CompareInt{#1}={4}}{%
+	}{\IfThenElse{\CompareInt{#1}={4}}{%
 		\Biggl#2#5\Biggm#3#6\Biggr#4%
 	}{%
 		\errmessage{leftmidright: illegal optional argument}%
@@ -168,9 +177,9 @@
 % Arrows
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\makearrowr}[3][0]{\mathrel{\Repeat{#1}{#2\joinrel}#3}}
-\newcommand{\makearrowb}[4][0]{\mathrel{#2\joinrel\Repeat{#1}{#3\joinrel}#4}}
-\newcommand{\makearrowx}[5][0]{\mathrel{\If{\CompareInt{#1}={0}}{#2}{#3\joinrel\Repeat{(#1) - 1}{#4\joinrel}#5}}}
+\newcommand{\makearrowr}[3][0]{\mathrel{\Replicate{#1}{#2\joinrel}#3}}
+\newcommand{\makearrowb}[4][0]{\mathrel{#2\joinrel\Replicate{#1}{#3\joinrel}#4}}
+\newcommand{\makearrowx}[5][0]{\mathrel{\IfThenElse{\CompareInt{#1}={0}}{#2}{#3\joinrel\Replicate{(#1) - 1}{#4\joinrel}#5}}}
 
 \renewcommand{\to}[1][0]{\makearrowr[#1]{\relbar}{\rightarrow}}
 \newcommand{\ot}[1][0]{\mathrel{\mathreflect{\to[#1]}}}
@@ -380,6 +389,9 @@
 \newcommand{\inj}{\mathrm{inj}}
 \newcommand{\prj}{\mathrm{prj}}
 \newcommand{\srj}{\mathrm{srj}}
+
+\newcommand{\pointwise}{\ \mathrm{pointwise}}
+\newcommand{\elementwise}{\ \mathrm{elementwise}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Everyday Order Theory
