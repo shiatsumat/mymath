@@ -10,22 +10,51 @@
 \WarningsOff[latexfont]
 \WarningsOff[caption]
 
-\usepackage{hyperref}
+\usepackage{hyperref, pxjahyper}
 \hypersetup{
   pdfborder={0 0 0},
-  colorlinks,
-  breaklinks,
-  bookmarksnumbered,
-  bookmarksopen,
+  colorlinks, breaklinks,
+  bookmarksnumbered, bookmarksopen,
   urlcolor=[rgb]{.9,.3,.7},
   linkcolor=[rgb]{.9,.3,.7},
   citecolor=[rgb]{.0,.7,.0}
 }
-\usepackage{pxjahyper}
 
 \usepackage[left=15mm,right=15mm,head=15mm,foot=15mm]{geometry}
 
-\usepackage{makeidx, expl3, xparse, xspace, url, pxrubrica, nameref, natbib}
+\usepackage{makeidx, expl3, etoolbox, xparse, xspace}
+\usepackage{url, pxrubrica, nameref, natbib}
+% https://tex.stackexchange.com/questions/24136/
+% natbib-and-hyperref-for-author-year-style-produces-two-links
+\pretocmd{\NAT@citex}{%
+  \let\NAT@hyper@\NAT@hyper@citex
+  \def\NAT@postnote{#2}%
+  \setcounter{NAT@total@cites}{0}%
+  \setcounter{NAT@count@cites}{0}%
+  \forcsvlist{\stepcounter{NAT@total@cites}\@gobble}{#3}}{}{}
+\newcounter{NAT@total@cites}
+\newcounter{NAT@count@cites}
+\def\NAT@postnote{}
+% include postnote and \citet closing bracket in hyperlink
+\def\NAT@hyper@citex#1{%
+  \stepcounter{NAT@count@cites}%
+  \hyper@natlinkstart{\@citeb\@extra@b@citeb}#1%
+  \ifnumequal{\value{NAT@count@cites}}{\value{NAT@total@cites}}
+    {\ifNAT@swa\else\if*\NAT@postnote*\else%
+     \NAT@cmt\NAT@postnote\global\def\NAT@postnote{}\fi\fi}{}%
+  \ifNAT@swa\else\if\relax\NAT@date\relax
+  \else\NAT@@close\global\let\NAT@nm\@empty\fi\fi% avoid compact citations
+  \hyper@natlinkend}
+\renewcommand\hyper@natlinkbreak[2]{#1}
+% avoid extraneous postnotes, closing brackets
+\patchcmd{\NAT@citex}
+  {\ifNAT@swa\else\if*#2*\else\NAT@cmt#2\fi
+   \if\relax\NAT@date\relax\else\NAT@@close\fi\fi}{}{}{}
+\patchcmd{\NAT@citex}
+  {\if\relax\NAT@date\relax\NAT@def@citea\else\NAT@def@citea@close\fi}
+  {\if\relax\NAT@date\relax\NAT@def@citea\else\NAT@def@citea@space\fi}{}{}
+\makeatother
+
 \usepackage{color, graphicx, tikz-cd, here, tabularx}
 \usepackage{listings, algorithm, algpseudocode, caption}
 \lstset{
@@ -61,12 +90,18 @@
   \DeclareSymbolFont{stix@largesymbols}{LS2}{stix2ex}{m}{n}
   \SetSymbolFont{stix@largesymbols}{bold}{LS2}{stix2ex}{b}{n}
   \SetSymbolFont{stix@symbols2}{bold}{LS1}{stix2frak}{b}{n}
-  \DeclareMathDelimiter{\lBrace}{\mathopen}{stix@largesymbols}{"E8}{stix@largesymbols}{"0E}
-  \DeclareMathDelimiter{\rBrace}{\mathclose}{stix@largesymbols}{"E9}{stix@largesymbols}{"0F}
-  \DeclareMathDelimiter{\lBrack}{\mathopen}{stix@largesymbols}{"E0}{stix@largesymbols}{"06}
-  \DeclareMathDelimiter{\rBrack}{\mathclose}{stix@largesymbols}{"E1}{stix@largesymbols}{"07}
-  \DeclareMathDelimiter{\lAngle}{\mathopen}{stix@largesymbols}{"EC}{stix@largesymbols}{"12}
-  \DeclareMathDelimiter{\rAngle}{\mathclose}{stix@largesymbols}{"ED}{stix@largesymbols}{"13}
+  \DeclareMathDelimiter{\lBrace}{\mathopen}{stix@largesymbols}%
+    {"E8}{stix@largesymbols}{"0E}
+  \DeclareMathDelimiter{\rBrace}{\mathclose}{stix@largesymbols}%
+    {"E9}{stix@largesymbols}{"0F}
+  \DeclareMathDelimiter{\lBrack}{\mathopen}{stix@largesymbols}%
+    {"E0}{stix@largesymbols}{"06}
+  \DeclareMathDelimiter{\rBrack}{\mathclose}{stix@largesymbols}%
+    {"E1}{stix@largesymbols}{"07}
+  \DeclareMathDelimiter{\lAngle}{\mathopen}{stix@largesymbols}%
+    {"EC}{stix@largesymbols}{"12}
+  \DeclareMathDelimiter{\rAngle}{\mathclose}{stix@largesymbols}%
+    {"ED}{stix@largesymbols}{"13}
   \DeclareMathSymbol{\zcmp}{\mathop}{stix@symbols2}{"EF}
 }
 \makeatother
@@ -110,7 +145,9 @@
 }
 \makeatother
 
-\newcommand{\mathstyle}[1]{\mathchoice{{#1}}{{#1}}{{\scriptsize{#1}}}{\tiny{#1}}}
+\newcommand{\mathstyle}[1]{%
+  \mathchoice{{#1}}{{#1}}{{\scriptsize{#1}}}{\tiny{#1}}%
+}
 \newcommand{\mathreflect}[1]{\mathstyle{\reflectbox{\(#1\)}}}
 \newcommand{\mathrotate}[2]{\mathstyle{\rotatebox[origin=c]{#1}{\(#2\)}}}
 \newcommand{\mathraise}[2]{\mathstyle{\raisebox{#1}{\(#2\)}}}
@@ -183,22 +220,42 @@
 % Arrows
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\makearrowr}[3][0]{\mathrel{\Replicate{#1}{#2\joinrel}#3}}
-\newcommand{\makearrowb}[4][0]{\mathrel{#2\joinrel\Replicate{#1}{#3\joinrel}#4}}
-\newcommand{\makearrowx}[5][0]{\mathrel{\IfThenElse{\CompareInt{#1}={0}}{#2}{#3\joinrel\Replicate{(#1) - 1}{#4\joinrel}#5}}}
+\newcommand{\makearrowr}[3][0]{%
+  \mathrel{\Replicate{#1}{#2\joinrel}#3}%
+}
+\newcommand{\makearrowb}[4][0]{%
+  \mathrel{#2\joinrel\Replicate{#1}{#3\joinrel}#4}%
+}
+\newcommand{\makearrowx}[5][0]{%
+  \mathrel{%
+    \IfThenElse{\CompareInt{#1}={0}}{#2}{%
+      #3\joinrel\Replicate{(#1) - 1}{#4\joinrel}#5%
+    }%
+  }%
+}
 
 \renewcommand{\to}[1][0]{\makearrowr[#1]{\relbar}{\rightarrow}}
 \newcommand{\ot}[1][0]{\mathrel{\mathreflect{\to[#1]}}}
 \newcommand{\To}[1][0]{\makearrowr[#1]{\Relbar}{\Rightarrow}}
 \newcommand{\oT}[1][0]{\mathrel{\mathreflect{\oT[#1]}}}
 
-\newcommand{\tot}[1][0]{\makearrowx[#1]{\leftrightarrow}{\leftarrow}{\relbar}{\rightarrow}}
-\newcommand{\ToT}[1][0]{\makearrowx[#1]{\Leftrightarrow}{\Leftarrow}{\Relbar}{\Rightarrow}}
+\newcommand{\tot}[1][0]{%
+  \makearrowx[#1]{\leftrightarrow}{\leftarrow}{\relbar}{\rightarrow}%
+}
+\newcommand{\ToT}[1][0]{%
+  \makearrowx[#1]{\Leftrightarrow}{\Leftarrow}{\Relbar}{\Rightarrow}%
+}
 
 \let\oldmapsto\mapsto
-\renewcommand{\mapsto}[1][0]{\makearrowx[#1]{\oldmapsto}{\vdash}{\relbar}{\rightarrow}}
+\renewcommand{\mapsto}[1][0]{%
+  \makearrowx[#1]{\oldmapsto}{\vdash}{\relbar}{\rightarrow}%
+}
 \newcommand{\mapsot}[1][0]{\mathrel{\mathreflect{\mapsto[#1]}}}
-\newcommand{\mapsTo}[1][0]{\makearrowb[#1]{\mathrel{\mathrms{0.23ex}{\mathscale{1}{0.6}{\mid}}\mkern-1mu}}{\Relbar}{\Rightarrow}}
+\newcommand{\mapsTo}[1][0]{%
+  \makearrowb[#1]{%
+    \mathrel{\mathrms{0.23ex}{\mathscale{1}{0.6}{\mid}}\mkern-1mu}%
+  }{\Relbar}{\Rightarrow}%
+}
 \newcommand{\mapsoT}[1][0]{\mathrel{\mathreflect{\Mapsto[#1]}}}
 
 \newcommand{\partto}[1][0]{\makearrowr[#1]{\relbar}{\rightharpoonup}}
@@ -207,7 +264,9 @@
 \newcommand{\monicto}[1][0]{\makearrowb[#1]{\lhook}{\relbar}{\rightarrow}}
 \newcommand{\monicot}[1][0]{\mathrel{\mathreflect{\monicto[#1]}}}
 
-\newcommand{\epicto}[1][0]{\makearrowr[#1]{\relbar}{\rightarrow\kern-1.8ex\rightarrow}}
+\newcommand{\epicto}[1][0]{%
+  \makearrowr[#1]{\relbar}{\rightarrow\kern-1.8ex\rightarrow}%
+}
 \newcommand{\epicot}[1][0]{\mathrel{\mathreflect{\epicto[#1]}}}
 
 \newcommand{\toto}{\rightrightarrows}
