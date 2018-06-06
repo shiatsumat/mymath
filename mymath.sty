@@ -22,8 +22,8 @@
 
 \usepackage[left=15mm,right=15mm,head=15mm,foot=15mm]{geometry}
 
-\usepackage{makeidx, expl3, etoolbox, xparse, xspace}
-\usepackage{url, pxrubrica, nameref, natbib}
+\usepackage{expl3, etoolbox, xparse, xspace}
+\usepackage{makeidx, url, pxrubrica, nameref, natbib}
 % https://tex.stackexchange.com/questions/24136/
 % natbib-and-hyperref-for-author-year-style-produces-two-links
 \pretocmd{\NAT@citex}{%
@@ -54,6 +54,10 @@
   {\if\relax\NAT@date\relax\NAT@def@citea\else\NAT@def@citea@close\fi}
   {\if\relax\NAT@date\relax\NAT@def@citea\else\NAT@def@citea@space\fi}{}{}
 \makeatother
+
+\newcommand{\safefootnote}[2]{%
+  \texorpdfstring{#1\protect\footnote{#2}}{#1}%
+}
 
 \usepackage{color, graphicx, tikz-cd, here, tabularx}
 \usepackage{listings, algorithm, algpseudocode, caption}
