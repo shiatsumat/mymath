@@ -76,6 +76,7 @@
 \mathtoolsset{showonlyrefs=true, showmanualtags}
 \let\openbox\relax
 \usepackage{amsthm, thmtools}
+\usepackage[nameinlink]{cleveref}
 
 \usepackage{newtxtext, newtxmath, bm}
 \usepackage[Symbolsmallscale]{upgreek}
@@ -420,10 +421,12 @@
 \newcommand{\nin}{\notin}
 \newcommand{\sub}{\subseteq}
 \newcommand{\nsub}{\nsubseteq}
+\newcommand{\subx}{\subset}
+\newcommand{\nsubx}{\nsubset}
 \newcommand{\super}{\supseteq}
 \newcommand{\nsuper}{\nsupseteq}
-\newcommand{\subx}{\subset}
 \newcommand{\superx}{\supset}
+\newcommand{\nsuperx}{\nsupset}
 
 \newcommand{\sand}{\cap}
 \newcommand{\Sand}{\bigcap}
@@ -473,9 +476,13 @@
 \newcommand{\Mor}{\bigvee}
 
 \newcommand{\qle}{\sqsubseteq}
+\newcommand{\nqle}{\nsqsubseteq}
 \newcommand{\qge}{\sqsupseteq}
+\newcommand{\nqge}{\nsqsupseteq}
 \newcommand{\qlt}{\sqsubset}
+\newcommand{\nqlt}{\nsqsubset}
 \newcommand{\qgt}{\sqsupset}
+\newcommand{\nqgt}{\nsqsupset}
 \newcommand{\qand}{\sqcap}
 \newcommand{\Qand}{\bigsqcap}
 \newcommand{\qor}{\sqcup}
