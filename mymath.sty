@@ -9,8 +9,9 @@
 \usepackage{silence}
 \WarningsOff[latexfont]
 \WarningsOff[caption]
+\WarningsOff[etex]
 
-\usepackage{hyperref, pxjahyper}
+\usepackage[hypertexnames=false]{hyperref}
 \hypersetup{
   pdfborder={0 0 0},
   colorlinks, breaklinks,
@@ -19,6 +20,7 @@
   linkcolor=[rgb]{.9,.3,.7},
   citecolor=[rgb]{.0,.7,.0}
 }
+\usepackage{pxjahyper}
 
 \usepackage[left=15mm,right=15mm,head=15mm,foot=15mm]{geometry}
 
@@ -77,10 +79,15 @@
 \makeatother
 
 \usepackage{mathtools}
-\mathtoolsset{showonlyrefs=true, showmanualtags}
+\makeatletter
+\renewcommand*{\eqref}[1]{%
+  \hyperref[{#1}]{\textup{\tagform@{\ref*{#1}}}}%
+}
+\makeatother
 \let\openbox\relax
 \usepackage{amsthm, thmtools}
 \usepackage[nameinlink]{cleveref}
+\usepackage{autonum}
 
 \usepackage{newtxtext, newtxmath, bm}
 \usepackage[Symbolsmallscale]{upgreek}
