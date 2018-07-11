@@ -25,7 +25,7 @@
 \usepackage[left=15mm,right=15mm,head=15mm,foot=15mm]{geometry}
 
 \usepackage{expl3, etoolbox, xparse, xspace}
-\usepackage{makeidx, url, pxrubrica, nameref, natbib}
+\usepackage{makeidx, url, pxrubrica, nameref, natbib, tocbibind}
 % https://tex.stackexchange.com/questions/24136/
 % natbib-and-hyperref-for-author-year-style-produces-two-links
 \pretocmd{\NAT@citex}{%
@@ -527,6 +527,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\es}{\bm{e}}
+\newcommand{\e}{\mathrm{e}}
 \renewcommand{\i}{\mathrm{i}} % \i used to be a special character
 \newcommand{\PI}{\uppi}
 \newcommand{\ify}{\infty}
